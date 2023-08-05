@@ -2,27 +2,30 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import './style/SignIn.css'
 
-function SignIn() {
+function SignUp() {
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSignIn = async (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
 
         try {
             await axios.post(
-                "https://node-express-conduit.appspot.com/api/users/login",
+                "https://node-express-conduit.appspot.com/api/users",
                 {
                     "user": {
+                        "username": username,
                         "email": email,
                         "password": password
                     }
                 }
             );
-
             navigate("/");
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
@@ -30,7 +33,7 @@ function SignIn() {
                 if (Array.isArray(errorMessages)) {
                     setError(errorMessages.join(", "));
                 } else if (typeof errorMessages === "object") {
-                    const messageArray = Object.entries(errorMessages).map(([key, value]) =>  `${key} ${value}`);
+                    const messageArray = Object.entries(errorMessages).map(([key, value]) => `${key} ${value}`);
                     setError(messageArray);
                 } else {
                     setError("An error occurred");
@@ -46,12 +49,31 @@ function SignIn() {
             <div class="container page">
                 <div class="row">
                     <div class="col-md-6 offset-md-3 col-xs-12">
-                        <h1 class="text-xs-center">Sign In</h1>
+                        <h1 class="text-xs-center">Sign Up</h1>
                         <p class="text-xs-center">
-                            <Link to="/register">Need an account?</Link>
+                            <Link to="/login">Have an account?</Link>
                         </p>
-                        {error && <li style={{ color: "red" }}>{error}</li>}
-                        <form onSubmit={handleSignIn}>
+                        {error && (
+                            <div style={{ color: "red" }}>
+                                {Array.isArray(error) ? (
+                                    error.map((errorMessage, index) => (
+                                        <li key={index}>{errorMessage}</li>
+                                    ))
+                                ) : (
+                                    <li>{error}</li>
+                                )}
+                            </div>
+                        )}
+                        <form onSubmit={handleSignUp}>
+                            <div class="form-group">
+                                <input
+                                    class="form-control form-control-lg"
+                                    type="text"
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                />
+                            </div>
                             <div class="form-group">
                                 <input
                                     class="form-control form-control-lg"
@@ -71,7 +93,7 @@ function SignIn() {
                                 />
                             </div>
                             <div class="form-group d-flex justify-content-center mt-3">
-                                <button class="btn btn-lg btn-primary" type="submit">Sign In</button>
+                                <button class="btn btn-lg btn-primary" type="submit">Sign Up</button>
                             </div>
                         </form>
                     </div>
@@ -81,4 +103,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;
+export default SignUp;
