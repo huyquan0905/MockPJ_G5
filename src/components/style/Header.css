@@ -1,0 +1,50 @@
+.header-container {
+  padding: 1rem 15rem;
+  display: flex;
+}
+
+/* Both Status logged and unlogged */
+.header-container a {
+  text-decoration: none;
+}
+
+.header-container #navbar-brand-logged,
+.header-container #navbar-brand-unlogged {
+  font-weight: 700;
+  color: rgb(92, 184, 92);
+  font-size: 1.3rem;
+}
+
+.header-container #navbar-nav-logged a,
+.header-container #navbar-nav-unlogged a {
+  margin-right: 1rem;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.header-container #navbar-nav-logged a:hover,
+.header-container #navbar-nav-unlogged a:hover {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.header-container #navbar-nav-logged a:active,
+.header-container #navbar-nav-unlogged a:active {
+  color: black;
+}
+
+/* Status Unlogged */
+.header-container #navbar-brand-unlogged {
+  width: 80%;
+}
+
+.header-container #navbar-nav-unlogged {
+  width: 20%;
+}
+
+/* Status Logged */
+.header-container #navbar-brand-logged {
+  width: 60%;
+}
+
+.header-container #navbar-nav-logged {
+  width: 40%;
+}
