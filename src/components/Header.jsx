@@ -13,7 +13,6 @@ const Header = () => {
   return (
     <header id="header">
       <div className="header-container">
-        {/* Roi trong css b css 2 cai logged voi unlogged la duoc */}
         <a
           id={`${isLoggedIn ? "navbar-brand-logged" : "navbar-brand-unlogged"}`}
           href="#main"
