@@ -13,15 +13,14 @@ function App() {
       <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/post" element={<PostArticle />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/register" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </Router>
       <Footer />
     </div>
-
   );
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import SignIn from "./SignIn";
 
 import "./style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,30 +16,30 @@ const Header = () => {
       <div className="header-container">
         <a
           id={`${isLoggedIn ? "navbar-brand-logged" : "navbar-brand-unlogged"}`}
-          href="#main"
+          href="home"
         >
           conduit
         </a>
 
         {isLoggedIn ? (
           <nav id="navbar-nav-logged">
-            <a href="#home">Home</a>
-            <a href="#signin">
+            <a href="home">Home</a>
+            <a href="signin" onClick={<SignIn />}>
               <FontAwesomeIcon icon={faPenToSquare} /> New Article
             </a>
-            <a href="#signup">
+            <a href="signup">
               <FontAwesomeIcon icon={faGear} /> Setting
             </a>
-            <a href="#Account">
+            <a href="Account">
               <FontAwesomeIcon icon={faFaceSmileBeam} /> AccountName
             </a>
           </nav>
         ) : (
           <>
             <nav id="navbar-nav-unlogged">
-              <a href="#home">Home</a>
-              <a href="#signin">Sign in</a>
-              <a href="#signup">Sign up</a>
+              <a href="home">Home</a>
+              <a href="signin">Sign in</a>
+              <a href="signup">Sign up</a>
             </nav>
           </>
         )}
