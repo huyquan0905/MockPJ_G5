@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { login } from './redux/actions';
 
 function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const accesstoken = (localStorage.getItem("token"));
+    console.log(accesstoken);
 
     const handleSignIn = async (e) => {
         e.preventDefault();
 
+        
         try {
-            await axios.post(
+            const response = await axios.post(
                 "https://node-express-conduit.appspot.com/api/users/login",
                 {
                     "user": {
@@ -22,6 +28,9 @@ function SignIn() {
                     }
                 }
             );
+            const token = response.data.user.token;
+            localStorage.setItem("token", token);
+            dispatch(login(token));
 
             navigate("/");
         } catch (error) {
@@ -30,7 +39,7 @@ function SignIn() {
                 if (Array.isArray(errorMessages)) {
                     setError(errorMessages.join(", "));
                 } else if (typeof errorMessages === "object") {
-                    const messageArray = Object.entries(errorMessages).map(([key, value]) =>  `${key} ${value}`);
+                    const messageArray = Object.entries(errorMessages).map(([key, value]) => `${key} ${value}`);
                     setError(messageArray);
                 } else {
                     setError("An error occurred");
@@ -52,7 +61,7 @@ function SignIn() {
                         </p>
                         {error && <li style={{ color: "red" }}>{error}</li>}
                         <form onSubmit={handleSignIn}>
-                            <div class="form-group">
+                            <div className="form-group">
                                 <input
                                     class="form-control form-control-lg"
                                     type="email"

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './style/SignIn.css'
+import { useDispatch } from 'react-redux';
+import { register } from './redux/actions';
 
 function SignUp() {
     const [username, setUsername] = useState("");
@@ -11,12 +13,13 @@ function SignUp() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
 
         try {
-            await axios.post(
+            const response = await axios.post(
                 "https://node-express-conduit.appspot.com/api/users",
                 {
                     "user": {
@@ -26,6 +29,9 @@ function SignUp() {
                     }
                 }
             );
+            const token = response.data.user.token;
+            localStorage.setItem("token", token);
+            dispatch(register(token));
             navigate("/");
         } catch (error) {
             if (error.response && error.response.data && error.response.data.errors) {
