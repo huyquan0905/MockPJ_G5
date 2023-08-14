@@ -1,6 +1,16 @@
 import React from 'react';
 import './style/Setting.css'
+import { useDispatch } from 'react-redux';
+import { logout } from './redux/actions'; 
+import { useNavigate } from "react-router-dom";
 const Setting = () => {
+    const dispatch  = useDispatch();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        dispatch(logout());
+        navigate('/');
+    };
     return (
         <div className='contentSt'>
             <h1>Your Settings </h1>
@@ -11,7 +21,7 @@ const Setting = () => {
                 <input type="email" name="" id=""  placeholder='Email'/>
                 <input type="password" placeholder='New Password' id="passw" />
                 <button className='btnSt'> Update Settings</button>
-                <button className='btnLogout'>Or click here to logout.</button>
+                <button className='btnLogout' onClick={handleLogout}>Or click here to logout.</button>
             </form>
             
         </div>
