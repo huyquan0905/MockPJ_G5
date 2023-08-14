@@ -1,0 +1,63 @@
+.contentSt{
+    width: 37%;
+    margin: 0 auto;
+    text-align: center;
+}
+.formSt{
+    display: flex;
+    flex-direction: column;
+}
+.formSt input{
+    margin-bottom: 15px;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid gray;
+    font-size: 1.25rem;
+}
+.formSt textarea{
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+}
+.contentSt input:focus,textarea:focus{
+    border-color: #66afe9;;
+    outline: none;
+}
+.contentSt h1{
+    font-weight: 400;
+    font-size: 2.5rem;
+}
+.btnSt{
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    border-radius: 0.3rem;
+    color: #fff;
+    background-color: #5CB85C;
+    border-color: #5CB85C;
+    cursor: pointer;
+    width: 35%;
+    margin-left: 65%;
+    margin-bottom: 15px;
+    border: 1px;
+}
+.btnSt:hover{
+    color: #fff;
+    background-color: #449d44;
+    border-color: #419641;
+}
+.btnLogout{
+    color: #B85C5C;
+    background-image: none;
+    background-color: transparent;
+    border-color: #B85C5C;
+    padding: 5px;
+    width: 35%;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 17px;
+
+}
+
+.btnLogout:hover{
+    color: white;
+    background-color: #B85C5C;
+}
+

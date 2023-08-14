@@ -1,4 +1,5 @@
 import React from "react";
+import SignIn from "./SignIn";
 import "./style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,7 +13,6 @@ const Header = () => {
   return (
     <header id="header">
       <div className="header-container">
-        {/* Roi trong css b css 2 cai logged voi unlogged la duoc */}
         <a
           id={`${isLoggedIn ? "navbar-brand-logged" : "navbar-brand-unlogged"}`}
           href="home"
@@ -24,6 +24,7 @@ const Header = () => {
           <nav id="navbar-nav-logged">
             <a href="home">Home</a>
             <a href="signin">
+            <a href="signin" onClick={<SignIn />}>
               <FontAwesomeIcon icon={faPenToSquare} /> New Article
             </a>
             <a href="signup">
