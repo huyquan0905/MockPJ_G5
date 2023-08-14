@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './style/HomePage.css'
+import GlobalFeed from './GlobalFeed';
 
 const HomePage = ({isLoggedIn}) => {
     const [tags, setTags] = useState([]);
@@ -51,6 +52,7 @@ const HomePage = ({isLoggedIn}) => {
                     <div className="col-md-9">
                         <div className="feed">
                             <a className='globalfeed' href="#globalfeed">Global Feed</a>
+                            <GlobalFeed/>
                         </div>
                     </div>
                     <div className="col-md-3">

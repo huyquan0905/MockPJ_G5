@@ -1,0 +1,67 @@
+
+.artical-meta{
+    display: flex;
+    font-size: small;
+    align-items: center;
+    margin-bottom: 1rem;
+    justify-content:space-between ; 
+}
+.artical-meta .author {
+    display: flex;
+}
+.artical-meta .author img{
+    margin-right: 5px;
+}
+.info {
+    line-height: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.info p:first-child{
+    font-size: 1rem;
+    margin: 0;
+}
+.info p:last-child{
+    color: #bbb;
+    font-size: 0.75rem;
+    margin: 0;
+}
+/* .artical-meta .favorite-button{
+    float: right;
+} */
+
+.article-preview h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.article-preview .article-description{
+    font-weight: 300;
+    font-size: 24px;
+    color: #999;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    /* line-height: 1.3rem; */
+}
+.article-preview span {
+    max-width: 30%;
+    font-size: 0.75rem;
+    color: #bbb;
+    /* vertical-align: middle; */
+}
+.article-preview .artical-tags{
+    float: right;
+    max-width: 50%;
+    vertical-align: top;
+
+}
+.article-preview .artical-tags li{
+    border: 1px solid #ddd;
+    color: #aaa;
+    background: none;
+    display: inline-block;
+}
+.article-preview {
+    border-color: #F2F2F2;
+    padding: 1.5rem 0;
+}
