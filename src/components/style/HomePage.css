@@ -7,11 +7,9 @@
 }
 .logo h1 {
     font-weight: 700;
-    font-family: sans-serif;
     font-size: 50px;
 }
 .logo p {
-    font-family: sans-serif;
     font-size: 20px;
 }
 
@@ -44,6 +42,7 @@ li {
 
 .globalfeed{
     margin-left: 5px;
+    
 }
 
 .col-md-9 .feed {
@@ -54,9 +53,9 @@ li {
 .globalfeed {
     color: #5CB85C; 
     text-decoration: none;
-    position: relative; 
-    padding-bottom: 10px;
-    border-bottom: 2px solid #5CB85C
+    /* position: relative; 
+    padding-bottom: 10px; 
+    border-bottom: 2px solid #5CB85C;  */
 }
   
   
