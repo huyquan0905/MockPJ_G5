@@ -1,0 +1,39 @@
+.mast-heading {
+  background-color: rgb(51, 51, 51);
+}
+
+.mast-heading-container {
+  padding: 1.5rem 15rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.title,
+.info-item .custom-link,
+.info-item .unfavorite {
+  color: white;
+}
+
+.info {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+}
+
+.info-item:nth-child(1) {
+  width: 5%;
+}
+.info-item:nth-child(2) {
+  width: 18%;
+}
+.info-item:nth-child(3) {
+  width: 22%;
+}
+.info-item:nth-child(4) {
+  width: 25%;
+}
+
+.info-item .avatar {
+  width: 1.5rem;
+  border-radius: 50%;
+}
