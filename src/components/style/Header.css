@@ -48,3 +48,7 @@
 .header-container #navbar-nav-logged {
   width: 40%;
 }
+
+.header-container #navbar-nav-logged .avatar {
+  width: 2rem;
+}
