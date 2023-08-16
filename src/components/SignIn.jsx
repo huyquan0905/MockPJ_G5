@@ -57,7 +57,7 @@ function SignIn() {
                     <div class="col-md-6 offset-md-3 col-xs-12">
                         <h1 class="text-xs-center">Sign In</h1>
                         <p class="text-xs-center">
-                            <Link to="/register">Need an account?</Link>
+                            <Link to="/signup">Need an account?</Link>
                         </p>
                         {error && <li style={{ color: "red" }}>{error}</li>}
                         <form onSubmit={handleSignIn}>

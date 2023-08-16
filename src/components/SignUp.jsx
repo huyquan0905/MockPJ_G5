@@ -57,7 +57,7 @@ function SignUp() {
                     <div class="col-md-6 offset-md-3 col-xs-12">
                         <h1 class="text-xs-center">Sign Up</h1>
                         <p class="text-xs-center">
-                            <Link to="/login">Have an account?</Link>
+                            <Link to="/signin">Have an account?</Link>
                         </p>
                         {error && (
                             <div style={{ color: "red" }}>
