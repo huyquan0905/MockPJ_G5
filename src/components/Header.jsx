@@ -1,45 +1,59 @@
 import React from "react";
+<<<<<<< HEAD
+=======
+import SignIn from "./SignIn";
+>>>>>>> 3433218f8c055460a39991b6e6a3d783777eaebb
 import "./style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFaceSmileBeam,
-  faPenToSquare,
-} from "@fortawesome/free-regular-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 
 const Header = () => {
-  const isLoggedIn = false;
+  // const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = true;
   return (
     <header id="header">
       <div className="header-container">
-        {/* Roi trong css b css 2 cai logged voi unlogged la duoc */}
-        <a
+        <Link
           id={`${isLoggedIn ? "navbar-brand-logged" : "navbar-brand-unlogged"}`}
-          href="home"
+          // to="home"
+          to="article-detail"
         >
           conduit
-        </a>
+        </Link>
 
         {isLoggedIn ? (
           <nav id="navbar-nav-logged">
+<<<<<<< HEAD
+            <Link to="home">Home</Link>
+            <Link to="post">
+=======
             <a href="home">Home</a>
             <a href="signin">
+            <a href="signin" onClick={<SignIn />}>
+>>>>>>> 3433218f8c055460a39991b6e6a3d783777eaebb
               <FontAwesomeIcon icon={faPenToSquare} /> New Article
-            </a>
-            <a href="signup">
+            </Link>
+            <Link to="setting">
               <FontAwesomeIcon icon={faGear} /> Setting
-            </a>
-            <a href="Account">
-              <FontAwesomeIcon icon={faFaceSmileBeam} /> AccountName
-            </a>
+            </Link>
+            <Link to="Account">
+              <img
+                src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"
+                alt="avt"
+                className="avatar"
+              />{" "}
+              AccountName
+            </Link>
           </nav>
         ) : (
           <>
             <nav id="navbar-nav-unlogged">
-              <a href="home">Home</a>
-              <a href="signin">Sign in</a>
-              <a href="signup">Sign up</a>
+              <Link to="home">Home</Link>
+              <Link to="signin">Signin</Link>
+              <Link to="signup">Signup</Link>
             </nav>
           </>
         )}
