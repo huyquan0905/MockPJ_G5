@@ -44,7 +44,7 @@ const GlobalFeed = () => {
 
     return (
         <div className='article'>
-            {articles.map(article => (
+                {articles.map(article => (
                 <div className='article-preview border-top border-bottom' key={article.slug}>
                     <div className='artical-meta'>
                         <div className='author'>
@@ -54,9 +54,9 @@ const GlobalFeed = () => {
                                 <p>{formatDate(article.createdAt)}</p>
                             </div>
                         </div>
-                        <button className='favorite-button btn btn-sm btn-outline-success' onClick={() => handleFavoriteClick(article.slug)}>
+                        <button className={`favorite-button btn btn-sm btn-outline-success ${article.favorited ? 'favorited' : ''}`} onClick={() => handleFavoriteClick(article.slug)}>
                             {article.favorited } 
-                            <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
+                            <FontAwesomeIcon icon={faHeart}/> {article.favoritesCount}
                         </button>
                     </div>
                     <h2>{article.title}</h2>
@@ -70,9 +70,11 @@ const GlobalFeed = () => {
                     </ul>
                     
                 </div>
+                
             ))}
-            
+
         </div>
+            
     );
 };
 

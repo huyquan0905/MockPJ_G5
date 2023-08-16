@@ -26,9 +26,10 @@
     font-size: 0.75rem;
     margin: 0;
 }
-/* .artical-meta .favorite-button{
-    float: right;
-} */
+.favorite-button.favorited {
+    background-color: green; 
+    color: white;
+  }
 
 .article-preview h2 {
     font-weight: 600;

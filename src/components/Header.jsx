@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 
+
 const Header = () => {
   const isLoggedIn = false;
   return (

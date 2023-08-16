@@ -51,7 +51,7 @@ const HomePage = ({isLoggedIn}) => {
                 <div className="row">
                     <div className="col-md-9">
                         <div className="feed">
-                            <a className='globalfeed' href="#globalfeed">Global Feed</a>
+                            <a className='globalfeed' href="#globalfeed">Global Feed </a>
                             <GlobalFeed/>
                         </div>
                     </div>
