@@ -6,6 +6,7 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const Header = () => {
+  // const isLoggedIn = localStorage.getItem("token");
   const isLoggedIn = true;
   return (
     <header id="header">
