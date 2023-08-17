@@ -80,6 +80,7 @@ const HomePage = ({ isLoggedIn }) => {
                   <a className="globalfeed" href="#globalfeed">
                     Global Feed
                   </a>
+                  <GlobalFeed />
                 </div>
               </div>
               <div className="col-md-3">
@@ -100,4 +101,4 @@ const HomePage = ({ isLoggedIn }) => {
   );
 };
 
-export default HomePage;
+export default HomePage

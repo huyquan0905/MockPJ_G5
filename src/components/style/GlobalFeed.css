@@ -1,4 +1,3 @@
-
 .artical-meta{
     display: flex;
     font-size: small;
@@ -64,4 +63,22 @@
 .article-preview {
     border-color: #F2F2F2;
     padding: 1.5rem 0;
+}
+
+.pagination-btn{
+    position: relative;
+    float: left;
+    padding: 0.5rem 0.75rem;
+    margin-left: -1px;
+    color: #5CB85C;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination-btn:focus{
+    color: #fff;
+    cursor: default;
+    background-color: #5CB85C;
+    border-color: #5CB85C;
 }

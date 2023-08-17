@@ -1,9 +1,15 @@
 footer {
   background: linear-gradient(#485563, #29323c);
   position: sticky;
-  bottom: 0;
-  left: 0;
   right: 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  color: #333;
+  text-align: center;
+  padding: 10px;
 }
 
 .footer-container {
