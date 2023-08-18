@@ -5,7 +5,6 @@ import { logout } from './redux/actions';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
 const Setting = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -181,6 +180,7 @@ const Setting = () => {
       </div>
     </div>
   );
+
 };
 
 export default Setting;

@@ -6,6 +6,7 @@
 .formSt{
     display: flex;
     flex-direction: column;
+    padding-bottom: 7rem;
 }
 .formSt input{
     margin-bottom: 15px;

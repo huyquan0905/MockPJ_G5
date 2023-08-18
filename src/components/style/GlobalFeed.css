@@ -19,15 +19,17 @@
 .info p:first-child{
     font-size: 1rem;
     margin: 0;
+    color: #3D8B3D;
 }
 .info p:last-child{
     color: #bbb;
     font-size: 0.75rem;
     margin: 0;
 }
-/* .artical-meta .favorite-button{
-    float: right;
-} */
+.favorite-button.favorited {
+    background-color: green; 
+    color: white;
+  }
 
 .article-preview h2 {
     font-weight: 600;
@@ -65,6 +67,11 @@
     padding: 1.5rem 0;
 }
 
+
+.globalfeed-btn {
+    color: #5CB85C; 
+    text-decoration: none;
+}
 .pagination-btn{
     position: relative;
     float: left;
@@ -81,4 +88,5 @@
     cursor: default;
     background-color: #5CB85C;
     border-color: #5CB85C;
+
 }

@@ -7,6 +7,7 @@ import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import PaginationList from './PaginationList';
 
 const GlobalFeed = () => {
+
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [articlesCount, setArticlesCount] = useState(0);
@@ -57,8 +58,12 @@ const GlobalFeed = () => {
     const totalPages = Math.ceil(articlesCount / limit);
 
     return (
+        <div>
+            <button className='btn globalfeed-btn' onClick={() => setStatus('globalfeed')}>
+                Global Feed
+            </button>
         <div className='article'>
-            {articles.map(article => (
+                {articles.map(article => (
                 <div className='article-preview border-top border-bottom' key={article.slug}>
                     <div className='artical-meta'>
                         <div className='author'>
@@ -68,9 +73,9 @@ const GlobalFeed = () => {
                                 <p>{formatDate(article.createdAt)}</p>
                             </div>
                         </div>
-                        <button className='favorite-button btn btn-sm btn-outline-success' onClick={() => handleFavoriteClick(article.slug)}>
-                            {article.favorited}
-                            <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
+                        <button className={`favorite-button btn btn-sm btn-outline-success ${article.favorited ? 'favorited' : ''}`} onClick={() => handleFavoriteClick(article.slug)}>
+                            {article.favorited } 
+                            <FontAwesomeIcon icon={faHeart}/> {article.favoritesCount}
                         </button>
                     </div>
                     <h2>{article.title}</h2>
@@ -84,6 +89,7 @@ const GlobalFeed = () => {
                     </ul>
 
                 </div>
+                
             ))}
 
             <PaginationList
@@ -91,8 +97,8 @@ const GlobalFeed = () => {
                 totalPages={totalPages}
                 handlePageChange={handlePageChange}
             />
-
         </div>
+    </div>
     );
 };
 
