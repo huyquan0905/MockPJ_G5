@@ -1,8 +1,8 @@
 import { createStore } from 'redux';
 
 const initialState = {
-  isAuthenticated: false,
-  token: null,
+  isAuthenticated: !!localStorage.getItem("token"), 
+  token: localStorage.getItem("token"),
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,7 +13,7 @@ const authReducer = (state = initialState, action) => {
         isAuthenticated: true,
         token: action.payload.token,
       };
-      case 'REGISTER':
+    case 'REGISTER':
       return {
         ...state,
         isAuthenticated: true,
