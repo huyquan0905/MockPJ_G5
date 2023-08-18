@@ -6,8 +6,8 @@ import Tags from './Tags';
 
 
 const HomePage = () => {
-  const isLoggedIn = localStorage.getItem("token");
-  // const isLoggedIn =false;
+  // const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn =false;
   const [status, setStatus] = useState('globalfeed');
 
 
