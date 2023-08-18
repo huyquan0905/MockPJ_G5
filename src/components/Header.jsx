@@ -1,8 +1,7 @@
 import React from "react";
-<<<<<<< HEAD
-=======
+
 import SignIn from "./SignIn";
->>>>>>> 3433218f8c055460a39991b6e6a3d783777eaebb
+
 import "./style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-regular-svg-icons";
@@ -11,8 +10,8 @@ import { Link } from "react-router-dom";
 
 
 const Header = () => {
-  // const isLoggedIn = localStorage.getItem("token");
-  const isLoggedIn = true;
+  const isLoggedIn = localStorage.getItem("token");
+  // const isLoggedIn = true;
   return (
     <header id="header">
       <div className="header-container">
@@ -26,14 +25,10 @@ const Header = () => {
 
         {isLoggedIn ? (
           <nav id="navbar-nav-logged">
-<<<<<<< HEAD
             <Link to="home">Home</Link>
             <Link to="post">
-=======
-            <a href="home">Home</a>
-            <a href="signin">
-            <a href="signin" onClick={<SignIn />}>
->>>>>>> 3433218f8c055460a39991b6e6a3d783777eaebb
+
+
               <FontAwesomeIcon icon={faPenToSquare} /> New Article
             </Link>
             <Link to="setting">

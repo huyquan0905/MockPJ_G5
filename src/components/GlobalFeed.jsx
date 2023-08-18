@@ -4,7 +4,8 @@ import { format } from 'date-fns';
 import './style/GlobalFeed.css'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
-const GlobalFeed = () => {
+
+const GlobalFeed = ({setStatus}) => {
     const [articles, setArticles] = useState([]);
 
     useEffect(() => {
@@ -43,6 +44,10 @@ const GlobalFeed = () => {
     };
 
     return (
+        <div>
+            <button className='btn globalfeed-btn' onClick={() => setStatus('globalfeed')}>
+                Global Feed
+            </button>
         <div className='article'>
                 {articles.map(article => (
                 <div className='article-preview border-top border-bottom' key={article.slug}>
@@ -74,7 +79,7 @@ const GlobalFeed = () => {
             ))}
 
         </div>
-            
+    </div>
     );
 };
 

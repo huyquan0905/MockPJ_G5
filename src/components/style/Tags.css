@@ -1,0 +1,24 @@
+.row>* {
+    max-width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+  
+li {
+    color: white;
+    max-width: fit-content;
+    border: 0 solid #818a91;
+    border-radius:25px;
+    background-color: #818a91;
+    display: inline-block;
+    font-size: 0.8rem; 
+    padding: 2px 8px;
+    margin-right: 5px;
+    margin-bottom: 0.2rem;
+}

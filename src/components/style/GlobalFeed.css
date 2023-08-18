@@ -20,6 +20,7 @@
 .info p:first-child{
     font-size: 1rem;
     margin: 0;
+    color: #3D8B3D;
 }
 .info p:last-child{
     color: #bbb;
@@ -65,4 +66,9 @@
 .article-preview {
     border-color: #F2F2F2;
     padding: 1.5rem 0;
+}
+
+.globalfeed-btn {
+    color: #5CB85C; 
+    text-decoration: none;
 }

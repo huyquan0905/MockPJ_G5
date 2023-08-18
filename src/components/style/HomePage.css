@@ -16,46 +16,27 @@
 .sidebar{
     background: #f3f3f3;
     border-radius: 4px;
-    
-}
-.col-md-3 {
-    padding-right: 60px;
-}
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-  
-li {
-    color: white;
-    max-width: fit-content;
-    border: 0 solid #818a91;
-    border-radius:25px;
-    background-color: #818a91;
-    display: inline-block;
-    font-size: 0.8rem; 
-    padding: 2px 8px;
-    margin-right: 5px;
-    margin-bottom: 0.2rem;
+    max-width: 250px;
 }
 
 .globalfeed{
     margin-left: 5px;
-    
+    margin-right: 10px;
 }
 
 .col-md-9 .feed {
-    padding-left: 7rem;
+    margin-left: 7rem;
 }
 
-.yourfeed,
-.globalfeed {
+.yourfeed-btn,
+.globalfeed-btn {
     color: #5CB85C; 
     text-decoration: none;
     /* position: relative; 
     padding-bottom: 10px; 
     border-bottom: 2px solid #5CB85C;  */
 }
+
+
   
   
