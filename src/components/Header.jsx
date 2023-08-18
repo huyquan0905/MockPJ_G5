@@ -36,7 +36,7 @@ const Header = () => {
             <Link to="setting">
               <FontAwesomeIcon icon={faGear} /> Setting
             </Link>
-            <Link to="Account">
+            <Link to="profile">
               <img
                 src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"
                 alt="avt"

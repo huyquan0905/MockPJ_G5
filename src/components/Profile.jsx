@@ -2,9 +2,11 @@ import React from 'react';
 import './style/Profile.css'
 import{ useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios'; 
 
 const Profile = () => {
+    const location = useLocation();
     
     const [user, setUser] = useState({
         username: '',
@@ -38,7 +40,7 @@ const Profile = () => {
         <div className='profileCt'>
             <div className='bgProfile'>
                 <div className='bgCt'>
-                    <img src="https://api.realworld.io/images/smiley-cyrus.jpeg" alt="" />
+                <img src={location.state.updatedProfilePicture || "https://api.realworld.io/images/smiley-cyrus.jpeg"} alt="" />
                     <h4>{user.username}</h4>
                     <Link to="/Setting">
                         <i className="fa fa-cog"></i> Edit Profile Settings

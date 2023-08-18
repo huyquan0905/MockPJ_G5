@@ -11,6 +11,7 @@ import ArticleDetail from "./components/ArticleDetail";
 import { Provider } from "react-redux";
 import store from "./components/redux/store";
 import ProtectedRoutes from "./components/redux/ProtectedRoutes";
+import Profile from "./components/Profile"
 
 function App() {
   const isAuth = localStorage.getItem("token");
@@ -25,7 +26,7 @@ function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/article-detail" element={<ArticleDetail />} />
-
+            <Route path="/profile" element={<Profile/>} />
             <Route path="/post" element={<PostArticle />} />
 
           </Route>
