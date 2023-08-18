@@ -1,3 +1,4 @@
+
 import React, {useState} from 'react';
 import './style/HomePage.css'
 import GlobalFeed from './GlobalFeed';
@@ -11,6 +12,7 @@ const HomePage = () => {
   const [status, setStatus] = useState('globalfeed');
 
 
+
   return (
     <div>
       {isLoggedIn ? (
@@ -20,7 +22,6 @@ const HomePage = () => {
               <div className="feed">
                 {status === 'yourfeed' && <YourFeed setStatus={setStatus}/>}
                 {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
-                
               </div>
             </div>
             <div className="col-md-3">
@@ -29,7 +30,7 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          </div>
+        </div>
       ) : (
         <div>
           <div className="container text-center text-white logo">
@@ -40,9 +41,11 @@ const HomePage = () => {
             <div className="row">
               <div className="col-md-9">
                 <div className="feed">
+
                   <div className="globalfeed">
                     {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
                   </div>
+
                 </div>
               </div>
               <div className="col-md-3">
@@ -58,4 +61,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default HomePage
