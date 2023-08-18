@@ -18,7 +18,7 @@ const GlobalFeed = ({setStatus}) => {
 
         const fetchArticles = async () => {
             try {
-                const response = await axios.get("https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}");
+                const response = await axios.get(`https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}`);
                 setArticles(response.data.articles);
                 setArticlesCount(response.data.articlesCount);
             } catch (error) {
