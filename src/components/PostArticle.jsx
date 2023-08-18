@@ -14,26 +14,55 @@ const PostArticle = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setArticle({ ...article, [name]: value }); 
+        setArticle({ ...article, [name]: value });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const token = localStorage.getItem("token");
+        console.log(token);
+        // axios.post('https://api.realworld.io/api/articles', {
+        //     article: {
+        //         title: article.title,
+        //         description: article.description,
+        //         body: article.body,
+        //         tagList: article.tagList
+        //     }
+        // },
+        //     {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`
+        //         }
+        //     })
+        //     .then(response => {
+        //         console.log(response.data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Lỗi cmn luôn:', error);
+        //     });
 
-        axios.post('https://api.realworld.io/api/articles', article, {
-            headers: {
-                Authorization: `Bearer ${token}`
+
+        axios.post("https://api.realworld.io/api/articles",
+            JSON.stringify({
+                article: {
+                    title: article.title,
+                    description: article.description,
+                    body: article.body,
+                    tagList: article.tagList,
+                },
+            }),
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
             }
-        })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Lỗi cmn luôn:', error);
+        )
+            .then((res) => {
+                console.log(res);
             });
-    };
+    }
 
     return (
         <div>
