@@ -59,9 +59,6 @@ const GlobalFeed = ({setStatus}) => {
 
     return (
         <div>
-            <button className='btn globalfeed-btn' onClick={() => setStatus('globalfeed')}>
-                Global Feed
-            </button>
         <div className='article'>
                 {articles.map(article => (
                 <div className='article-preview border-top border-bottom' key={article.slug}>
