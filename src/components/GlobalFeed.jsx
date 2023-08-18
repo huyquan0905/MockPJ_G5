@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import PaginationList from './PaginationList';
 
-const GlobalFeed = () => {
+const GlobalFeed = ({setStatus}) => {
 
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
