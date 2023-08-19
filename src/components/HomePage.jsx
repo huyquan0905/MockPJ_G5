@@ -53,6 +53,9 @@ const HomePage = () => {
                 <div className="feed">
 
                   <div className="globalfeed">
+                    <button className='btn yourfeed-btn' onClick={() => setStatus('globalfeed')}>
+                        Global Feed
+                    </button>
                     {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
                   </div>
 
