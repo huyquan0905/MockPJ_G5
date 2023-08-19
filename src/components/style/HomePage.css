@@ -4,40 +4,69 @@
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 30px;
-    box-sizing: border-box;
 }
+
 .logo h1 {
     font-weight: 700;
     font-size: 50px;
 }
+
 .logo p {
     font-size: 20px;
 }
 
-.sidebar{
+.sidebar {
     background: #f3f3f3;
     border-radius: 4px;
-    max-width: 250px;
+
 }
 
-.globalfeed{
+/* .sidebar-right {
+    text-align: right;
+  } */
+
+.col-md-8 {
+    margin-left: 4rem;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px;
+}
+
+li {
+    color: white;
+    max-width: fit-content;
+    border: 0 solid #818a91;
+    border-radius: 25px;
+    background-color: #818a91;
+    display: inline-block;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    margin-right: 5px;
+    margin-bottom: 0.2rem;
+}
+
+.globalfeed {
     margin-left: 5px;
-    margin-right: 10px;
+
 }
 
-.col-md-9 .feed {
-    margin-left: 7rem;
-}
-
-.yourfeed-btn,
-.globalfeed-btn {
-    color: #5CB85C; 
+.yourfeed,
+.globalfeed {
+    color: #5CB85C;
     text-decoration: none;
-    /* position: relative; 
-    padding-bottom: 10px; 
-    border-bottom: 2px solid #5CB85C;  */
 }
-
-
-  
-  
+.sidebar {
+    width: 270px;
+}
+.sidebar p {
+    margin: 10px;
+}
+.tag-button {  
+    color: white;
+    border: 0 solid #818a91;
+    background-color: #818a91;
+    padding: 0;
+}

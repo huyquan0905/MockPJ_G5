@@ -1,33 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { format } from 'date-fns';
-import './style/GlobalFeed.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { format } from "date-fns";
+import "./style/GlobalFeed.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import PaginationList from './PaginationList';
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import PaginationList from "./PaginationList";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const GlobalFeed = ({setStatus}) => {
 
-    const [articles, setArticles] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [articlesCount, setArticlesCount] = useState(0);
-    const limit = 10;
 
-    useEffect(() => {
-        const offset = (currentPage - 1) * limit;
+const GlobalFeed = ({ selectedTag, currentPage , setCurrentPage}) => {
+  const [articles, setArticles] = useState([]);
+  const [articlesCount, setArticlesCount] = useState(0);
+  const limit = 10;
+  const isLoggedIn = useSelector(state => state.isAuthenticated); 
+  const nav = useNavigate();
 
-        const fetchArticles = async () => {
-            try {
-                const response = await axios.get("https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}");
-                setArticles(response.data.articles);
-                setArticlesCount(response.data.articlesCount);
-            } catch (error) {
-                console.error('Error fetching articles:', error);
-            }
-        };
+  
 
-        fetchArticles();
-    }, [currentPage]);
+  useEffect(() => {
+    const offset = (currentPage - 1) * limit;
+
+    const fetchArticles = async () => {
+      try {
+        let apiUrl = `https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}`;
+        if (selectedTag) {
+          apiUrl += `&tag=${selectedTag}`;
+        }
+
+        const response = await axios.get(apiUrl);
+        setArticles(response.data.articles);
+        setArticlesCount(response.data.articlesCount);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+
+    fetchArticles();
+  }, [currentPage, selectedTag]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -36,23 +47,29 @@ const GlobalFeed = ({setStatus}) => {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
+       
+     
     };
 
     const handleFavoriteClick = (slug) => {
-        setArticles(prevArticles => {
-            return prevArticles.map(article => {
-                if (article.slug === slug) {
-                    return {
-                        ...article,
-                        favorited: !article.favorited,
-                        favoritesCount: article.favorited
-                            ? article.favoritesCount - 1
-                            : article.favoritesCount + 1
-                    };
-                }
-                return article;
+        if (isLoggedIn) {
+            setArticles(prevArticles => {
+                return prevArticles.map(article => {
+                    if (article.slug === slug) {
+                        return {
+                            ...article,
+                            favorited: !article.favorited,
+                            favoritesCount: article.favorited
+                                ? article.favoritesCount - 1
+                                : article.favoritesCount + 1
+                        };
+                    }
+                    return article;
+                });
             });
-        });
+        } else {
+            nav('/signin');
+        }
     };
 
     const totalPages = Math.ceil(articlesCount / limit);
@@ -60,8 +77,9 @@ const GlobalFeed = ({setStatus}) => {
     return (
         <div>
         <div className='article'>
-                {articles.map(article => (
-                <div className='article-preview border-top border-bottom' key={article.slug}>
+            {articles.map(article => (
+                <div className='article-preview border-top border-bottom' 
+                key={article.slug}>
                     <div className='artical-meta'>
                         <div className='author'>
                             <img className='rounded-circle' src="https://api.realworld.io/images/demo-avatar.png" alt="avatar" />
@@ -70,9 +88,11 @@ const GlobalFeed = ({setStatus}) => {
                                 <p>{formatDate(article.createdAt)}</p>
                             </div>
                         </div>
-                        <button className={`favorite-button btn btn-sm btn-outline-success ${article.favorited ? 'favorited' : ''}`} onClick={() => handleFavoriteClick(article.slug)}>
-                            {article.favorited } 
-                            <FontAwesomeIcon icon={faHeart}/> {article.favoritesCount}
+                        <button
+                            className={`favorite-button ${article.favorited ? 'border border-success-subtle rounded-1 favorited' : 'border border-success-subtle rounded-1 bg-white text-success'}`}
+                            onClick={() => handleFavoriteClick(article.slug)}
+                            >
+                            {article.favorited} <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
                         </button>
                     </div>
                     <h2>{article.title}</h2>
@@ -86,16 +106,18 @@ const GlobalFeed = ({setStatus}) => {
                     </ul>
 
                 </div>
-                
             ))}
-
+        </div>
+        <div>
             <PaginationList
                 currentPage={currentPage}
                 totalPages={totalPages}
                 handlePageChange={handlePageChange}
+                selectedTag={selectedTag}
             />
+
         </div>
-    </div>
+        </div>
     );
 };
 

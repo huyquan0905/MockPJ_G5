@@ -1,8 +1,19 @@
-import React from 'react';
+import React, {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import '../components/style/PostArticle.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PostArticle = () => {
+    const navigate = useNavigate();
+    const accesstoken = (localStorage.getItem("token"));
+    console.log(accesstoken);
+
+    useEffect(() => {
+        if(!accesstoken){
+            navigate('/')
+        }
+    }, [accesstoken, navigate])
+
     return (
         <div>
             <div id="main">

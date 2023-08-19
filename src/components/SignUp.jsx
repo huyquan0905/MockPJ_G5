@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -14,6 +14,15 @@ function SignUp() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const accesstoken = (localStorage.getItem("token"));
+    console.log(accesstoken);
+
+    useEffect(() => {
+        if (accesstoken) {
+            navigate('/')
+        }
+    }, [accesstoken, navigate])
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -39,7 +48,7 @@ function SignUp() {
                 if (Array.isArray(errorMessages)) {
                     setError(errorMessages.join(", "));
                 } else if (typeof errorMessages === "object") {
-                    const messageArray = Object.entries(errorMessages).map(([key, value]) => `${key} ${value}`);
+                    const messageArray = Object.entries(errorMessages).map(([key, value]) => `${ key } ${ value }`);
                     setError(messageArray);
                 } else {
                     setError("An error occurred");

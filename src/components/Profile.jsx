@@ -1,48 +1,24 @@
-import React from 'react';
 import './style/Profile.css'
-import{ useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios'; 
-
+import React, { useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 const Profile = () => {
-    
-    const [user, setUser] = useState({
-        username: '',
-        email: '',
-        bio: ''
-    });
+    const navigate = useNavigate();
+    const accesstoken = (localStorage.getItem("token"));
+    console.log(accesstoken);
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (token) {
-            axios.get('https://node-express-conduit.appspot.com/api/user', {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            })
-            .then(response => {
-                const userData = response.data.user;
-                setUser({
-                    username: userData.username,
-                    email: userData.email,
-                    bio: userData.bio
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching user data:', error);
-            });
+        if(!accesstoken){
+            navigate('/')
         }
-    }, []);
+    }, [accesstoken, navigate])
 
     return (
         <div className='profileCt'>
             <div className='bgProfile'>
                 <div className='bgCt'>
                     <img src="https://api.realworld.io/images/smiley-cyrus.jpeg" alt="" />
-                    <h4>{user.username}</h4>
-                    <Link to="/Setting">
-                        <i className="fa fa-cog"></i> Edit Profile Settings
-                    </Link>
+                    <h4>...</h4>
+                    <a href="#"><i class="fa fa-cog"></i> Edit Profile Settings</a>
                 </div>
             </div>
             <div className='arcticles-toggle'>

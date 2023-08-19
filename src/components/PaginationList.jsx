@@ -1,4 +1,5 @@
 import React from 'react';
+import "./style/Footer.css"
 
 const PaginationList = ({ currentPage, totalPages, handlePageChange }) => {
     const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);

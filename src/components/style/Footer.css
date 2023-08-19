@@ -1,6 +1,6 @@
 footer {
   background: linear-gradient(#485563, #29323c);
-  position: fixed;
+  position: sticky;
   right: 0;
   left: 0;
   bottom: 0;
@@ -26,4 +26,8 @@ footer {
   color: white;
   font-size: 1.3rem;
   font-weight: 500;
+}
+
+.pagination {
+  margin-bottom: 50px;
 }
