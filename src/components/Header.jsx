@@ -7,10 +7,7 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-
-  const isLoggedIn = useSelector(state => state.isAuthenticated); 
-
-
+  const isLoggedIn = useSelector((state) => state.isAuthenticated);
 
   return (
     <header id="header">
@@ -25,12 +22,8 @@ const Header = () => {
 
         {isLoggedIn ? (
           <nav id="navbar-nav-logged">
-
             <Link to="home">Home</Link>
             <Link to="post">
-
-
-
               <FontAwesomeIcon icon={faPenToSquare} /> New Article
             </Link>
             <Link to="setting">

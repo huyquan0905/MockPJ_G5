@@ -16,34 +16,42 @@ const GlobalFeed = ({ selectedTag, currentPage , setCurrentPage}) => {
   const limit = 10;
   const isLoggedIn = useSelector(state => state.isAuthenticated); 
   const nav = useNavigate();
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
   
 
   useEffect(() => {
-    const offset = (currentPage - 1) * limit;
-
     const fetchArticles = async () => {
-      try {
-        let apiUrl = `https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}`;
-        if (selectedTag) {
-          apiUrl += `&tag=${selectedTag}`;
-        }
+        try {
+            const offset = (currentPage - 1) * limit;
+            let apiUrl = `https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}`;
+            if (selectedTag) {
+                apiUrl += `&tag=${selectedTag}`;
+            }
 
-        const response = await axios.get(apiUrl);
-        setArticles(response.data.articles);
-        setArticlesCount(response.data.articlesCount);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-      }
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
+
+            const response = await axios.get(apiUrl, {
+                headers: headers,
+            });
+            setArticles(response.data.articles);
+            setArticlesCount(response.data.articlesCount);
+        } catch (error) {
+            console.error("Error fetching articles:", error);
+        }
     };
 
     fetchArticles();
-  }, [currentPage, selectedTag]);
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return format(date, "MMMM d, yyyy");
-    };
+}, [currentPage, limit, selectedTag, token]);
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, "MMMM d, yyyy");
+};
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -94,6 +102,10 @@ const GlobalFeed = ({ selectedTag, currentPage , setCurrentPage}) => {
                             >
                             {article.favorited} <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
                         </button>
+                        {/* <button className='favorite-button btn btn-sm btn-outline-success' onClick={() => handleFavoriteClick(article.slug)}>
+                            {article.favorited}
+                            <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
+                        </button> */}
                     </div>
                     <h2>{article.title}</h2>
                     <p className='article-description'>{article.description}</p>

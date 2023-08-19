@@ -29,7 +29,7 @@ function SignUp() {
 
         try {
             const response = await axios.post(
-                "https://node-express-conduit.appspot.com/api/users",
+                "https://api.realworld.io/api/users",
                 {
                     "user": {
                         "username": username,
