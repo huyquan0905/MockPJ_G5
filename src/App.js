@@ -8,6 +8,7 @@ import Header from "./components/Header";
 import PostArticle from "./components/PostArticle";
 import Setting from "./components/Setting";
 import ArticleDetail from "./components/ArticleDetail";
+import Account from "./components/Account";
 import { Provider } from "react-redux";
 import store from "./components/redux/store";
 import ProtectedRoutes from "./components/redux/ProtectedRoutes";
@@ -24,10 +25,10 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/setting" element={<Setting />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/article-detail" element={<ArticleDetail />} />
 
             <Route path="/post" element={<PostArticle />} />
-
           </Route>
           <Route element={<ProtectedRoutes auth={isAuth} />}>
             {/* <Route path="/post" element={<PostArticle />} /> */}
