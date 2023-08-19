@@ -10,32 +10,22 @@ import Setting from "./components/Setting";
 import ArticleDetail from "./components/ArticleDetail";
 import { Provider } from "react-redux";
 import store from "./components/redux/store";
-import ProtectedRoutes from "./components/redux/ProtectedRoutes";
-import Profile from "./components/Profile"
 
 function App() {
-  const isAuth = localStorage.getItem("token");
   return (
     <div>
       <Header />
       <Provider store={store}>
         <Routes>
-          <Route>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/article-detail" element={<ArticleDetail />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/post" element={<PostArticle />} />
-
-          </Route>
-          <Route element={<ProtectedRoutes auth={isAuth} />}>
-            {/* <Route path="/post" element={<PostArticle />} /> */}
-          </Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/post" element={<PostArticle />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/setting" element={<Setting />} />
+          <Route path="/article-detail" element={<ArticleDetail />} />
         </Routes>
       </Provider>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }
