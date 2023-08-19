@@ -1,64 +1,89 @@
-
-import React, {useState} from 'react';
-import './style/HomePage.css'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import "./style/HomePage.css";
 import GlobalFeed from './GlobalFeed';
-import YourFeed from './YourFeed';
-import Tags from './Tags';
-
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  // const isLoggedIn = localStorage.getItem("token");
-  const isLoggedIn =false;
-  const [status, setStatus] = useState('globalfeed');
+    const [tags, setTags] = useState([]);
+    const [selectedTag, setSelectedTag] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const isLoggedIn = useSelector(state => state.isAuthenticated);
 
+    useEffect(() => {
+        axios.get('https://api.realworld.io/api/tags')
+            .then((response) => {
+                setTags(response.data.tags);
+            })
+            .catch((error) => {
+                console.log('Error tags: ' + error);
+            });
+    }, []);
 
-
-  return (
-    <div>
-      {isLoggedIn ? (
-        <div className="container page">
-          <div className="row">
-            <div className="col-md-9">
-              <div className="feed">
-                {status === 'yourfeed' && <YourFeed setStatus={setStatus}/>}
-                {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
-              </div>
+    const renderTagList = () => {
+        return (
+            <div className='sidebar border border-0 sidebar-right'>
+                Popular Tags
+                <ul>
+                    {tags.map((tag) => (
+                        <li key={tag}>
+                            <button className='tag-button' onClick={() => {
+                                console.log('Clicked tag:', tag);
+                                setSelectedTag(tag);
+                                setCurrentPage(1);
+                            }}>
+                                {tag}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
             </div>
-            <div className="col-md-3">
-              <div className="sidebar border border-0">
-               <Tags />
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
+        )
+    };
+
+    return (
         <div>
-          <div className="container text-center text-white logo">
-            <h1>conduit</h1>
-            <p>A place to share your knowledge.</p>
-          </div>
-          <div className="container page">
-            <div className="row">
-              <div className="col-md-9">
-                <div className="feed">
+            {isLoggedIn ? (
+                <div className='container page'>
+                    <div className='row'>
+                        <div className='col-md-9'>
+                            <div className='feed'>
+                                <a className='yourfeed' href="#yourfeed">Your Feed</a>
+                                <a className='globalfeed' href="#globalfeed" onClick={() => setSelectedTag(null)}>Global Feed</a>
+                            </div>
+                            <GlobalFeed selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                        </div>
 
-                  <div className="globalfeed">
-                    {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
-                  </div>
+                        <div className='col-md-3'>
+                            {renderTagList()}
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div>
+                    <div className='container text-center text-white logo'>
+                        <h1>conduit</h1>
+                        <p>A place to share your knowledge.</p>
+                    </div>
 
+                    <div className='container page'>
+                        <div className='row'>
+                            <div className='col-md-8'>
+                                <div className='feed'>
+                                    <a className='globalfeed' href="#globalfeed" onClick={() => setSelectedTag(null)}>Global Feed</a>
+                                </div>
+                                <GlobalFeed selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+                            </div>
+
+                            <div className='col-md-3'>
+                                {renderTagList()}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div className="col-md-3">
-                <div className="sidebar border border-0">
-                  <Tags />
-                </div>
-              </div>
-            </div>
-          </div>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
-export default HomePage
+export default HomePage;

@@ -1,33 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { format } from 'date-fns';
-import './style/GlobalFeed.css'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { format } from "date-fns";
+import "./style/GlobalFeed.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import PaginationList from './PaginationList';
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import PaginationList from "./PaginationList";
 
-const GlobalFeed = ({setStatus}) => {
+const GlobalFeed = ({ selectedTag, currentPage , setCurrentPage}) => {
+  const [articles, setArticles] = useState([]);
+  const [articlesCount, setArticlesCount] = useState(0);
+  const limit = 10;
 
-    const [articles, setArticles] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [articlesCount, setArticlesCount] = useState(0);
-    const limit = 10;
+  useEffect(() => {
+    const offset = (currentPage - 1) * limit;
 
-    useEffect(() => {
-        const offset = (currentPage - 1) * limit;
+    const fetchArticles = async () => {
+      try {
+        let apiUrl = `https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}`;
+        if (selectedTag) {
+          apiUrl += `&tag=${selectedTag}`;
+        }
 
-        const fetchArticles = async () => {
-            try {
-                const response = await axios.get("https://api.realworld.io/api/articles?limit=${limit}&offset=${offset}");
-                setArticles(response.data.articles);
-                setArticlesCount(response.data.articlesCount);
-            } catch (error) {
-                console.error('Error fetching articles:', error);
-            }
-        };
+        const response = await axios.get(apiUrl);
+        setArticles(response.data.articles);
+        setArticlesCount(response.data.articlesCount);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
 
-        fetchArticles();
-    }, [currentPage]);
+    fetchArticles();
+  }, [currentPage, selectedTag]);
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -36,6 +39,8 @@ const GlobalFeed = ({setStatus}) => {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
+       
+     
     };
 
     const handleFavoriteClick = (slug) => {
@@ -58,12 +63,8 @@ const GlobalFeed = ({setStatus}) => {
     const totalPages = Math.ceil(articlesCount / limit);
 
     return (
-        <div>
-            <button className='btn globalfeed-btn' onClick={() => setStatus('globalfeed')}>
-                Global Feed
-            </button>
         <div className='article'>
-                {articles.map(article => (
+            {articles.map(article => (
                 <div className='article-preview border-top border-bottom' key={article.slug}>
                     <div className='artical-meta'>
                         <div className='author'>
@@ -73,9 +74,9 @@ const GlobalFeed = ({setStatus}) => {
                                 <p>{formatDate(article.createdAt)}</p>
                             </div>
                         </div>
-                        <button className={`favorite-button btn btn-sm btn-outline-success ${article.favorited ? 'favorited' : ''}`} onClick={() => handleFavoriteClick(article.slug)}>
-                            {article.favorited } 
-                            <FontAwesomeIcon icon={faHeart}/> {article.favoritesCount}
+                        <button className='favorite-button btn btn-sm btn-outline-success' onClick={() => handleFavoriteClick(article.slug)}>
+                            {article.favorited}
+                            <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
                         </button>
                     </div>
                     <h2>{article.title}</h2>
@@ -89,16 +90,16 @@ const GlobalFeed = ({setStatus}) => {
                     </ul>
 
                 </div>
-                
             ))}
 
             <PaginationList
                 currentPage={currentPage}
                 totalPages={totalPages}
                 handlePageChange={handlePageChange}
+                selectedTag={selectedTag}
             />
+
         </div>
-    </div>
     );
 };
 

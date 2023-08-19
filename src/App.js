@@ -11,10 +11,8 @@ import ArticleDetail from "./components/ArticleDetail";
 import Account from "./components/Account";
 import { Provider } from "react-redux";
 import store from "./components/redux/store";
-import ProtectedRoutes from "./components/redux/ProtectedRoutes";
 
 function App() {
-  const isAuth = localStorage.getItem("token");
   return (
     <div>
       <Header />
@@ -35,7 +33,7 @@ function App() {
           </Route>
         </Routes>
       </Provider>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

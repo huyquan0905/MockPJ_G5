@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -14,9 +14,14 @@ function SignIn() {
     const accesstoken = (localStorage.getItem("token"));
     console.log(accesstoken);
 
+    useEffect(() => {
+        if(accesstoken){
+            navigate('/')
+        }
+    }, [accesstoken, navigate])
+
     const handleSignIn = async (e) => {
         e.preventDefault();
-
         
         try {
             const response = await axios.post(
