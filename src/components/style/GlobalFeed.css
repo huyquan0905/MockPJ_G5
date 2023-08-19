@@ -28,7 +28,13 @@
 /* .artical-meta .favorite-button{
     float: right;
 } */
-
+.favorite-button.favorited {
+    background-color: green; 
+    color: white; 
+}
+.favorite-button {
+    border-color: #5CB85C;
+}
 .article-preview h2 {
     font-weight: 600;
     font-size: 1.5rem;
@@ -64,7 +70,9 @@
     border-color: #F2F2F2;
     padding: 1.5rem 0;
 }
-
+.pagination {
+    width: 100%;
+}
 .pagination-btn{
     position: relative;
     float: left;
@@ -83,3 +91,6 @@
     background-color: #5CB85C;
     border-color: #5CB85C;
 }
+/* .clickable-article {
+    cursor: pointer;
+} */

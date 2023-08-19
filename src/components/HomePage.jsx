@@ -23,7 +23,7 @@ const HomePage = () => {
     const renderTagList = () => {
         return (
             <div className='sidebar border border-0 sidebar-right'>
-                Popular Tags
+                <p>Popular Tags</p>
                 <ul>
                     {tags.map((tag) => (
                         <li key={tag}>
@@ -41,19 +41,19 @@ const HomePage = () => {
         )
     };
 
+
     return (
         <div>
             {isLoggedIn ? (
                 <div className='container page'>
                     <div className='row'>
-                        <div className='col-md-9'>
+                        <div className='col-md-8'>
                             <div className='feed'>
                                 <a className='yourfeed' href="#yourfeed">Your Feed</a>
                                 <a className='globalfeed' href="#globalfeed" onClick={() => setSelectedTag(null)}>Global Feed</a>
                             </div>
                             <GlobalFeed selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                         </div>
-
                         <div className='col-md-3'>
                             {renderTagList()}
                         </div>

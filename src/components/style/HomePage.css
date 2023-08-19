@@ -25,14 +25,14 @@
     text-align: right;
   } */
 
-.col-md-3 {
-    padding-right: 60px;
+.col-md-8 {
+    margin-left: 4rem;
 }
 
 ul {
     list-style-type: none;
     padding: 0;
-    margin: 0;
+    margin: 10px;
 }
 
 li {
@@ -53,27 +53,20 @@ li {
 
 }
 
-.col-md-9 .feed {
-    padding-left: 7rem;
-}
-
 .yourfeed,
 .globalfeed {
     color: #5CB85C;
     text-decoration: none;
 }
-
-.tag-button {
+.sidebar {
+    width: 270px;
+}
+.sidebar p {
+    margin: 10px;
+}
+.tag-button {  
     color: white;
-    max-width: -moz-fit-content;
-    max-width: fit-content;
     border: 0 solid #818a91;
-    border-radius: 25px;
     background-color: #818a91;
-    display: inline-block;
-    font-size: 0.8rem;
-    margin-right: -11px;
-    margin-bottom: 0.2rem;
-    padding: 5px 10px 10px 10px;
-    margin-left: 10px;
+    padding: 0;
 }
