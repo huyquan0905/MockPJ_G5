@@ -29,11 +29,7 @@ const Header = () => {
             <Link to="setting">
               <FontAwesomeIcon icon={faGear} /> Setting
             </Link>
-<<<<<<< HEAD
-            <Link to="account">
-=======
             <Link to="profile">
->>>>>>> c4dd626d5e4db6e900bdb6ec6554489c477a6138
               <img
                 src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"
                 alt="avt"
