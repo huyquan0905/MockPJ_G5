@@ -18,6 +18,12 @@ const PostArticle = () => {
     });
 
     useEffect(() => {
+        if (!token) {
+            navigate('/')
+        }
+    }, [token, navigate])
+
+    useEffect(() => {
         axios.get('https://api.realworld.io/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`,
