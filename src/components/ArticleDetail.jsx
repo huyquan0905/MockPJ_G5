@@ -1,116 +1,142 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import "./style/ArticleDetail.css";
+import { FaPlus, FaHeart } from 'react-icons/fa';
+import { useNavigate } from "react-router-dom";
 
-const ArticleDetail = () => {
+
+const ArticleDetail = ({ slug, token }) => {
+  const [article, setArticle] = useState(null);
+
+  const navigate = useNavigate();
+  const accesstoken = (localStorage.getItem("token"));
+  console.log(accesstoken);
+
+  useEffect(() => {
+    if (!accesstoken) {
+      navigate('/')
+    }
+  }, [accesstoken, navigate])
+
+  useEffect(() => {
+    const fetchArticleDetail = async () => {
+      try {
+        const apiUrl = `https://api.realworld.io/api/articles/${slug}`;
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await axios.get(apiUrl, {
+          headers: headers,
+        });
+        setArticle(response.data.article);
+      } catch (error) {
+        console.error("Error fetching article detail:", error);
+      }
+    };
+
+    fetchArticleDetail();
+  }, [slug, token]);
+
+  if (!article) {
+    return <p>Loading...</p>;
+  }
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, "MMMM d, yyyy");
+  };
+
   return (
     <div id="ArticleDetail">
       <div className="mast-heading">
         <div className="mast-heading-container">
           <div className="title">
-            Try to transmit the HTTP card, maybe it will override the multi-byte
-            hard drive!
+            <h1>{article.title}</h1>
           </div>
+
           <div className="info">
             <div className="info-item">
-              {/* Change Link to after */}
               <Link to="Account">
-                <img
-                  src="https://toppng.com/uploads/preview/avatar-png-11554021819gij72acuim.png"
-                  alt="avt"
-                  className="avatar"
-                />{" "}
+                <img src={article.author.image} alt={article.author.username} />
               </Link>
             </div>
-            <div className="info-item">
+
+            <div className="info-item author">
               <div className="name">
-                {/* Change Link to after */}
                 <Link to="Account" className="custom-link">
-                  Anah Benešová
+                  {article.author.username}
                 </Link>
               </div>
-              <div className="date">December 9, 2022</div>
+
+              <div className="date"><span>{formatDate(article.createdAt)}</span></div>
             </div>
+
             <div className="info-item">
-              <button className="follow">+ Follow Anah Benešová</button>
+              <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                <FaPlus className="icon" /> Follow {article.author.username}
+              </button>
             </div>
-            <div className="info-item">
-              <button className="unfavorite">
-                + Unfavourite Article (1611)
+            <div className="info-item favorite">
+              <button className="btn btn-sm  btn-outline-primary">
+                <FaHeart className="icon" /> <span>Favorite Article: {article.favoritesCount}</span>
               </button>
             </div>
           </div>
         </div>
       </div>
+
       <div className="mast-content">
         <div className="mast-content-container">
           <div className="content">
             <div className="paragraph">
-              <p>
-                Sunt excepturi ut dolore fuga.\nAutem eum maiores aut nihil
-                magnam corporis consectetur sit. Voluptate et quasi optio eos et
-                eveniet culpa et nobis.\nSint aut sint sequi possimus reiciendis
-                nisi.\nRerum et omnis et sit doloribus corporis voluptas
-                error.\nIusto molestiae tenetur necessitatibus dolorem omnis.
-                Libero sed ut architecto.\nEx itaque et modi aut voluptatem
-                alias quae.\nModi dolor cupiditate sit.\nDelectus consectetur
-                nobis aliquid deserunt sint ut et voluptas.\nCorrupti in labore
-                laborum quod. Ipsa laudantium deserunt. Ut atque harum inventore
-                natus facere sed molestiae.\nQuia aliquid ut.\nAnimi sunt rem et
-                sit ullam dolorem ab consequatur modi. Cupiditate officia
-                voluptatum.\nTenetur facere eum distinctio animi qui
-                laboriosam.\nQuod sed voluptatem et cumque est eos.\nSint id
-                provident suscipit harum odio et. Et fuga repellendus magnam
-                dignissimos eius aspernatur rerum. Quo perferendis
-                nesciunt.\nDolore dolorem porro omnis voluptatibus consequuntur
-                et expedita suscipit et.\nTempora facere ipsa.\nDolore accusamus
-                soluta officiis eligendi.\nEum quaerat neque eum beatae odio. Ad
-                voluptate vel.\nAut aut dolor. Cupiditate officia
-                voluptatum.\nTenetur facere eum distinctio animi qui
-                laboriosam.\nQuod sed voluptatem et cumque est eos.\nSint id
-                provident suscipit harum odio et.
-              </p>
+              <p className='article-body'>{article.body}</p>
             </div>
-            <ul className="tag-list">
-              <li>voluptate</li>
-              <li>rerum</li>
-              <li>ducimus</li>
-              <li>hic</li>
+
+            <ul className='article-tags'>
+              {article.tagList.map(tag => (
+                <li key={tag} className="tag-default tag-pill tag-outline ng-binding ng-scope">{tag}</li>
+              ))}
             </ul>
           </div>
           <hr />
-          {/* Section article-action */}
+
           <div className="article-action">
             <div className="article-action-container">
               <div className="info-item">
-                {/* Change Link to after */}
                 <Link to="Account">
-                  <img
-                    src="https://toppng.com/uploads/preview/avatar-png-11554021819gij72acuim.png"
-                    alt="avt"
-                    className="avatar"
-                  />{" "}
+                  <img src={article.author.image} alt={article.author.username} />
                 </Link>
               </div>
-              <div className="info-item">
+
+              <div className="info-item author">
                 <div className="name">
-                  {/* Change Link to after */}
                   <Link to="Account" className="custom-link">
-                    Anah Benešová
+                    {article.author.username}
                   </Link>
                 </div>
-                <div className="date">December 9, 2022</div>
+
+                <div className="date"><span>{formatDate(article.createdAt)}</span></div>
               </div>
+
               <div className="info-item">
-                <button className="follow">+ Follow Anah Benešová</button>
+                <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                  <FaPlus className="icon" /> Follow {article.author.username}
+                </button>
               </div>
-              <div className="info-item">
-                <button className="unfavorite">
-                  + Unfavourite Article (1611)
+              <div className="info-item favorite">
+                <button className="btn btn-sm  btn-outline-primary">
+                  <FaHeart className="icon" /> <span>Favorite Article: {article.favoritesCount}</span>
                 </button>
               </div>
             </div>
           </div>
+
           <div className="comment">
             <div className="comment-container">
               <form className="cmt-card">
@@ -120,6 +146,7 @@ const ArticleDetail = () => {
                     placeholder="Write a comment..."
                   ></textarea>
                 </div>
+
                 <div className="cmt-card-footer">
                   <img
                     src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"

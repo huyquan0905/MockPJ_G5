@@ -10,6 +10,8 @@ import Setting from "./components/Setting";
 import ArticleDetail from "./components/ArticleDetail";
 import { Provider } from "react-redux";
 import store from "./components/redux/store";
+import ArticleDetailPage from './components/ArticleDetailPage'
+import GlobalFeed from './components/GlobalFeed';
 
 function App() {
   return (
@@ -22,7 +24,11 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/setting" element={<Setting />} />
-          <Route path="/article-detail" element={<ArticleDetail />} />
+        </Routes>
+        <Routes>
+          <Route path="/globalfeed" element={<GlobalFeed />} />
+          <Route path="/article/:slug" element={<ArticleDetailPage />} />
+
         </Routes>
       </Provider>
       {/* <Footer /> */}

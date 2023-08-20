@@ -22,7 +22,7 @@ const Header = () => {
 
         {isLoggedIn ? (
           <nav id="navbar-nav-logged">
-            <Link to="home">Home</Link>
+            <Link to="">Home</Link>
             <Link to="post">
               <FontAwesomeIcon icon={faPenToSquare} /> New Article
             </Link>
