@@ -3,25 +3,26 @@ import axios from "axios";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import "./style/ArticleDetail.css";
-import { FaPlus, FaHeart } from 'react-icons/fa';
-import ArticleComments from './ArticleComments'
+import { FaPlus, FaHeart } from "react-icons/fa";
+import { faPencil, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import ArticleComments from "./ArticleComments";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ArticleDetail = () => {
   const [article, setArticle] = useState(null);
   const { slug } = useParams();
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-
   useEffect(() => {
     const fetchArticleDetail = async () => {
       try {
         const apiUrl = `https://api.realworld.io/api/articles/${slug}`;
         const headers = {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         };
         if (token) {
-          headers['Authorization'] = `Bearer ${ token }`;
+          headers["Authorization"] = `Bearer ${token}`;
         }
 
         const response = await axios.get(apiUrl, {
@@ -68,19 +69,32 @@ const ArticleDetail = () => {
                 </Link>
               </div>
 
-              <div className="date"><span>{formatDate(article.createdAt)}</span></div>
+              <div className="date">
+                <span>{formatDate(article.createdAt)}</span>
+              </div>
             </div>
 
             <div className="info-item">
-              <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+              <button className="btn btn-sm action-btn ng-binding btn-outline-secondary follow">
                 <FaPlus className="icon" /> Follow {article.author.username}
               </button>
             </div>
-            <div className="info-item favorite">
-              <button className="btn btn-sm  btn-outline-primary">
-                <FaHeart className="icon" /> <span>Favorite Article: {article.favoritesCount}</span>
+            <div className="info-item ">
+              <button className="btn btn-sm  btn-outline-primary favorite">
+                <FaHeart className="icon" />{" "}
+                <span>Favorite Article: {article.favoritesCount}</span>
               </button>
             </div>
+            {/* <div className="info-item">
+              <button className="btn btn-sm edit-art">
+                <FontAwesomeIcon icon={faPencil} /> Edit Article
+              </button>
+            </div>
+            <div className="info-item">
+              <button className="btn btn-sm delete-art">
+                <FontAwesomeIcon icon={faTrashCan} /> Delete Article
+              </button>
+            </div> */}
           </div>
         </div>
       </div>
@@ -89,12 +103,17 @@ const ArticleDetail = () => {
         <div className="mast-content-container">
           <div className="content">
             <div className="paragraph">
-              <p className='article-body'>{article.body}</p>
+              <p className="article-body">{article.body}</p>
             </div>
 
-            <ul className='article-tags'>
-              {article.tagList.map(tag => (
-                <li key={tag} className="tag-default tag-pill tag-outline ng-binding ng-scope">{tag}</li>
+            <ul className="article-tags">
+              {article.tagList.map((tag) => (
+                <li
+                  key={tag}
+                  className="tag-default tag-pill tag-outline ng-binding ng-scope"
+                >
+                  {tag}
+                </li>
               ))}
             </ul>
           </div>
@@ -104,7 +123,10 @@ const ArticleDetail = () => {
             <div className="article-action-container">
               <div className="info-item">
                 <Link to="Account">
-                  <img src={article.author.image} alt={article.author.username} />
+                  <img
+                    src={article.author.image}
+                    alt={article.author.username}
+                  />
                 </Link>
               </div>
 
@@ -115,24 +137,41 @@ const ArticleDetail = () => {
                   </Link>
                 </div>
 
-                <div className="date"><span>{formatDate(article.createdAt)}</span></div>
+                <div className="date">
+                  <span>{formatDate(article.createdAt)}</span>
+                </div>
               </div>
 
               <div className="info-item">
-                <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                <button className="btn btn-sm action-btn ng-binding btn-outline-secondary follow">
                   <FaPlus className="icon" /> Follow {article.author.username}
                 </button>
               </div>
-              <div className="info-item favorite">
-                <button className="btn btn-sm  btn-outline-primary">
-                  <FaHeart className="icon" /> <span>Favorite Article: {article.favoritesCount}</span>
+              <div className="info-item">
+                <button className="btn btn-sm  btn-outline-primary favorite">
+                  <FaHeart className="icon" />{" "}
+                  <span>Favorite Article: {article.favoritesCount}</span>
                 </button>
               </div>
+
+              {/* <div className="info-item">
+                <button className="btn btn-sm edit-art">
+                  <FontAwesomeIcon icon={faPencil} /> Edit Article
+                </button>
+              </div>
+              <div className="info-item">
+                <button className="btn btn-sm delete-art">
+                  <FontAwesomeIcon icon={faTrashCan} /> Delete Article
+                </button>
+              </div> */}
             </div>
           </div>
 
-          <ArticleComments slug={slug} token={token} user={{ id: article.author.id }} />
-
+          <ArticleComments
+            slug={slug}
+            token={token}
+            user={{ id: article.author.id }}
+          />
         </div>
       </div>
     </div>

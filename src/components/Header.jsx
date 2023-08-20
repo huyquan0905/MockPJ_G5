@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { useSelector } from "react-redux";
 import "./style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +10,29 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const isLoggedIn = useSelector((state) => state.isAuthenticated);
+  const [articles, setArticles] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://api.realworld.io/api/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        const userData = response.data.user;
+        setUser({
+          username: userData.username,
+          email: userData.email,
+        });
+        console.log(userData);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }, []);
 
   return (
     <header id="header">
@@ -34,7 +59,7 @@ const Header = () => {
                 alt="avt"
                 className="avatar"
               />{" "}
-              AccountName
+              {user.username}
             </Link>
           </nav>
         ) : (
