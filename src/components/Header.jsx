@@ -14,7 +14,6 @@ const Header = () => {
       <div className="header-container">
         <Link
           id={`${isLoggedIn ? "navbar-brand-logged" : "navbar-brand-unlogged"}`}
-          // to="home"
           to=""
         >
           conduit

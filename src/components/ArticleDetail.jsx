@@ -61,7 +61,7 @@ const ArticleDetail = ({ slug, token }) => {
           </div>
 
           <div className="info">
-            <div className="info-item">
+            <div className="info-item-avt">
               <Link to="Account">
                 <img src={article.author.image} alt={article.author.username} />
               </Link>
