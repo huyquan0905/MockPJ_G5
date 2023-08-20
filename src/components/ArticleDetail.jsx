@@ -1,16 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlus,
+  faHeart,
+  faPencil,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import "./style/ArticleDetail.css";
+import axios from "axios";
+
+const usePath = () => {
+  const location = useLocation();
+
+  return location.pathname.split("/")[2];
+};
 
 const ArticleDetail = () => {
+  const slug = usePath();
+  const [article, setArticle] = useState({});
+  const [author, setAuthor] = useState({});
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      const apiUrl = `https://api.realworld.io/api/articles/${slug}`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const response = await axios.get(apiUrl, { headers });
+
+      setArticle(response.data.article);
+      setAuthor(response.data.article.author);
+    };
+
+    fetchArticle();
+  }, [slug]);
+
   return (
     <div id="ArticleDetail">
       <div className="mast-heading">
         <div className="mast-heading-container">
-          <div className="title">
-            Try to transmit the HTTP card, maybe it will override the multi-byte
-            hard drive!
-          </div>
+          <div className="title">{article.title}</div>
           <div className="info">
             <div className="info-item">
               {/* Change Link to after */}
@@ -26,17 +61,29 @@ const ArticleDetail = () => {
               <div className="name">
                 {/* Change Link to after */}
                 <Link to="Account" className="custom-link">
-                  Anah Benešová
+                  {author.username}
                 </Link>
               </div>
               <div className="date">December 9, 2022</div>
             </div>
             <div className="info-item">
-              <button className="follow">+ Follow Anah Benešová</button>
+              <button className="follow">
+                <FontAwesomeIcon icon={faPlus} /> Follow {author.username}
+              </button>
             </div>
             <div className="info-item">
               <button className="unfavorite">
-                + Unfavourite Article (1611)
+                <FontAwesomeIcon icon={faHeart} /> Unfavourite Article (1611)
+              </button>
+            </div>
+            <div className="info-item">
+              <button className="edit-art">
+                <FontAwesomeIcon icon={faPencil} /> Edit Article
+              </button>
+            </div>
+            <div className="info-item">
+              <button className="delete-art">
+                <FontAwesomeIcon icon={faTrashCan} /> Delete Article
               </button>
             </div>
           </div>
@@ -46,30 +93,7 @@ const ArticleDetail = () => {
         <div className="mast-content-container">
           <div className="content">
             <div className="paragraph">
-              <p>
-                Sunt excepturi ut dolore fuga.\nAutem eum maiores aut nihil
-                magnam corporis consectetur sit. Voluptate et quasi optio eos et
-                eveniet culpa et nobis.\nSint aut sint sequi possimus reiciendis
-                nisi.\nRerum et omnis et sit doloribus corporis voluptas
-                error.\nIusto molestiae tenetur necessitatibus dolorem omnis.
-                Libero sed ut architecto.\nEx itaque et modi aut voluptatem
-                alias quae.\nModi dolor cupiditate sit.\nDelectus consectetur
-                nobis aliquid deserunt sint ut et voluptas.\nCorrupti in labore
-                laborum quod. Ipsa laudantium deserunt. Ut atque harum inventore
-                natus facere sed molestiae.\nQuia aliquid ut.\nAnimi sunt rem et
-                sit ullam dolorem ab consequatur modi. Cupiditate officia
-                voluptatum.\nTenetur facere eum distinctio animi qui
-                laboriosam.\nQuod sed voluptatem et cumque est eos.\nSint id
-                provident suscipit harum odio et. Et fuga repellendus magnam
-                dignissimos eius aspernatur rerum. Quo perferendis
-                nesciunt.\nDolore dolorem porro omnis voluptatibus consequuntur
-                et expedita suscipit et.\nTempora facere ipsa.\nDolore accusamus
-                soluta officiis eligendi.\nEum quaerat neque eum beatae odio. Ad
-                voluptate vel.\nAut aut dolor. Cupiditate officia
-                voluptatum.\nTenetur facere eum distinctio animi qui
-                laboriosam.\nQuod sed voluptatem et cumque est eos.\nSint id
-                provident suscipit harum odio et.
-              </p>
+              <p>{article.body}</p>
             </div>
             <ul className="tag-list">
               <li>voluptate</li>
@@ -89,24 +113,37 @@ const ArticleDetail = () => {
                     src="https://toppng.com/uploads/preview/avatar-png-11554021819gij72acuim.png"
                     alt="avt"
                     className="avatar"
-                  />{" "}
+                  />
                 </Link>
               </div>
               <div className="info-item">
                 <div className="name">
                   {/* Change Link to after */}
                   <Link to="Account" className="custom-link">
-                    Anah Benešová
+                    {author.username}
                   </Link>
                 </div>
                 <div className="date">December 9, 2022</div>
               </div>
               <div className="info-item">
-                <button className="follow">+ Follow Anah Benešová</button>
+                <button className="follow">
+                  {" "}
+                  <FontAwesomeIcon icon={faPlus} /> Follow {author.username}
+                </button>
               </div>
               <div className="info-item">
                 <button className="unfavorite">
-                  + Unfavourite Article (1611)
+                  <FontAwesomeIcon icon={faHeart} /> Unfavourite Article (1611)
+                </button>
+              </div>
+              <div className="info-item">
+                <button className="edit-art">
+                  <FontAwesomeIcon icon={faPencil} /> Edit Article
+                </button>
+              </div>
+              <div className="info-item">
+                <button className="delete-art">
+                  <FontAwesomeIcon icon={faTrashCan} /> Delete Article
                 </button>
               </div>
             </div>

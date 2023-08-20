@@ -55,6 +55,12 @@
 
 .info-item button {
   border-radius: 0.2rem;
+  opacity: 0.8;
+  padding: 0.25rem 0.5rem;
+}
+.info-item button {
+  transition: 0.1s all;
+  opacity: 1;
 }
 
 .info-item .follow {
@@ -63,11 +69,40 @@
   background-color: transparent;
   border-color: #ccc;
 }
+.info-item .follow:hover {
+  color: #fff;
+  background-color: #ccc;
+}
 
 .info-item .unfavorite {
   color: #fff;
   background-color: #5cb85c;
   border-color: #5cb85c;
+}
+.info-item .unfavorite:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #419641;
+}
+
+.info-item .edit-art {
+  color: #ccc;
+  border-color: #ccc;
+  background-color: transparent;
+}
+.info-item .edit-art:hover {
+  color: #fff;
+  background-color: #ccc;
+}
+
+.info-item .delete-art {
+  color: #b85c5c;
+  border-color: #b85c5c;
+  background-color: transparent;
+}
+.info-item .delete-art:hover {
+  color: #fff;
+  background-color: #b85c5c;
 }
 
 /* Mast Content */
