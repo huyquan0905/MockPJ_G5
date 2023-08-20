@@ -46,17 +46,12 @@
   height: 32px;
   width: 32px;
   border-radius: 30px;
-
 }
 
 .info .info-item {
   display: inline-block;
   vertical-align: middle;
   line-height: 1rem;
-}
-
-.info .info-item-avt {
-  margin-right: 30px;
 }
 
 .info-item button {
@@ -83,6 +78,7 @@
   background-color: transparent;
   border-color: #ccc;
 }
+
 
 .btn-outline-primary {
   color: #5CB85C;
@@ -181,7 +177,6 @@ ul.article-tags {
   justify-content: center;
 }
 
-
 /* Section Comment */
 .comment-container {
   padding: 0 7rem;
@@ -191,10 +186,12 @@ ul.article-tags {
   border: 1px solid #e5e5e5;
   box-shadow: none !important;
   box-sizing: border-box;
+  padding: 1.25rem
 }
 
 .cmt-card-block {
-  padding: 0;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
 }
 
 .cmt-card-block .text-area {
@@ -205,7 +202,7 @@ ul.article-tags {
 }
 
 .cmt-card-footer {
-  padding: 0.75rem 1.25rem;
+  padding: 5px 15px;
   display: flex;
   justify-content: space-between;
   border-top: 1px solid #e5e5e5;
@@ -223,4 +220,60 @@ ul.article-tags {
   font-weight: 700;
   padding: 0.25rem 0.5rem;
   font-size: 0.875rem;
+}
+
+
+.comment-author {
+  color: #373a3c;
+}
+
+.date {
+  margin-left: 10px;
+}
+
+.comment {
+  margin-top: 20px;
+}
+
+.comment-container {
+  margin-top: 20px;
+}
+
+.cmt-footer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  padding-top: 8px;
+}
+
+.cmt-footer img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.cmt-footer span {
+  font-weight: 500;
+}
+
+.date {
+  font-size: 10px;
+  color: gray;
+}
+
+.cmt-footer .date {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+  color: #bbb;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  font-size: 16px;
+  margin-left: auto;
 }

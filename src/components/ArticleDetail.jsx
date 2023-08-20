@@ -4,21 +4,14 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import "./style/ArticleDetail.css";
 import { FaPlus, FaHeart } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
+import ArticleComments from './ArticleComments'
+import { useParams } from "react-router-dom";
 
-
-const ArticleDetail = ({ slug, token }) => {
+const ArticleDetail = () => {
   const [article, setArticle] = useState(null);
+  const { slug } = useParams();
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
-  const navigate = useNavigate();
-  const accesstoken = (localStorage.getItem("token"));
-  console.log(accesstoken);
-
-  useEffect(() => {
-    if (!accesstoken) {
-      navigate('/')
-    }
-  }, [accesstoken, navigate])
 
   useEffect(() => {
     const fetchArticleDetail = async () => {
@@ -28,12 +21,13 @@ const ArticleDetail = ({ slug, token }) => {
           'Content-Type': 'application/json',
         };
         if (token) {
-          headers['Authorization'] = `Bearer ${token}`;
+          headers['Authorization'] = `Bearer ${ token }`;
         }
 
         const response = await axios.get(apiUrl, {
           headers: headers,
         });
+        console.log(token);
         setArticle(response.data.article);
       } catch (error) {
         console.error("Error fetching article detail:", error);
@@ -61,7 +55,7 @@ const ArticleDetail = ({ slug, token }) => {
           </div>
 
           <div className="info">
-            <div className="info-item-avt">
+            <div className="info-item">
               <Link to="Account">
                 <img src={article.author.image} alt={article.author.username} />
               </Link>
@@ -137,29 +131,8 @@ const ArticleDetail = ({ slug, token }) => {
             </div>
           </div>
 
-          <div className="comment">
-            <div className="comment-container">
-              <form className="cmt-card">
-                <div className="cmt-card-block">
-                  <textarea
-                    class="text-area"
-                    placeholder="Write a comment..."
-                  ></textarea>
-                </div>
+          <ArticleComments slug={slug} token={token} user={{ id: article.author.id }} />
 
-                <div className="cmt-card-footer">
-                  <img
-                    src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"
-                    alt="avt"
-                    className="avatar"
-                  />
-                  <button className="btn btn-primary" type="submit">
-                    Post Comment
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
         </div>
       </div>
     </div>
