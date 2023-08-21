@@ -47,17 +47,20 @@ li {
     margin-right: 5px;
     margin-bottom: 0.2rem;
 }
-
 .globalfeed {
     margin-left: 5px;
 
 }
-
+.feed {
+    padding-bottom: 0.5rem;
+}
 .yourfeed,
 .globalfeed {
     color: #5CB85C;
     text-decoration: none;
+    padding: 0.5rem 1rem;
 }
+
 .sidebar {
     width: 270px;
 }

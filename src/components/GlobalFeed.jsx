@@ -96,9 +96,11 @@ const GlobalFeed = ({ selectedTag, currentPage, setCurrentPage }) => {
                                 <p>{formatDate(article.createdAt)}</p>
                             </div>
                         </div>
-                        <button className='favorite-button btn btn-sm btn-outline-success' onClick={() => handleFavoriteClick(article.slug)}>
-                            {article.favorited}
-                            <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
+                        <button
+                            className={`favorite-button ${article.favorited ? 'border border-success-subtle rounded-1 favorited' : 'border border-success-subtle rounded-1 bg-white text-success'}`}
+                            onClick={() => handleFavoriteClick(article.slug)}
+                            >
+                            {article.favorited} <FontAwesomeIcon icon={faHeart} /> {article.favoritesCount}
                         </button>
                     </div>
                     <h2>{article.title}</h2>

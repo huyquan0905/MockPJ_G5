@@ -1,9 +1,9 @@
 .artical-meta{
     display: flex;
     font-size: small;
-    align-items: center;
     margin-bottom: 1rem;
     justify-content:space-between ; 
+    margin-left: 20px;
 }
 .artical-meta .author {
     display: flex;
@@ -11,14 +11,17 @@
 .artical-meta .author img{
     margin-right: 5px;
 }
-.info {
+.author .info {
     line-height: 1rem;
     display: flex;
     flex-direction: column;
+    gap: 0;
+    align-items: flex-start;
 }
 .info p:first-child{
     font-size: 1rem;
     margin: 0;
+    color: #5CB85C;
 }
 .info p:last-child{
     color: #bbb;
