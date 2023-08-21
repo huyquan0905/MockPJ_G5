@@ -3,16 +3,17 @@ import axios from "axios";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import "./style/ArticleDetail.css";
-import { FaPlus, FaHeart } from "react-icons/fa";
-import { faPencil, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FaPlus, FaHeart, FaEdit, FaTrashAlt } from 'react-icons/fa';
 import ArticleComments from "./ArticleComments";
 import { useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ArticleDetail = () => {
   const [article, setArticle] = useState(null);
   const { slug } = useParams();
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [author, setAuthor] = useState("");
+  const [user, setUser] = useState();
+  const [userName, setUserName] = useState("")
 
   useEffect(() => {
     const fetchArticleDetail = async () => {
@@ -28,15 +29,36 @@ const ArticleDetail = () => {
         const response = await axios.get(apiUrl, {
           headers: headers,
         });
-        console.log(token);
         setArticle(response.data.article);
+        setAuthor(response.data.article.author.username)
       } catch (error) {
         console.error("Error fetching article detail:", error);
       }
     };
-
     fetchArticleDetail();
   }, [slug, token]);
+
+  useEffect(() => {
+    axios.get('https://api.realworld.io/api/user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        const userData = response.data.user;
+        setUser({
+          username: userData.username,
+          email: userData.email,
+        });
+        console.log(userData);
+        setUserName(userData.username);
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+  }, []);
+
+  const compareUserName = userName === author;
 
   if (!article) {
     return <p>Loading...</p>;
@@ -55,13 +77,12 @@ const ArticleDetail = () => {
             <h1>{article.title}</h1>
           </div>
 
-          <div className="info">
+          <div className="info" style={{ display: "flex", gap: "10px" }}>
             <div className="info-item">
               <Link to="Account">
                 <img src={article.author.image} alt={article.author.username} />
               </Link>
             </div>
-
             <div className="info-item author">
               <div className="name">
                 <Link to="Account" className="custom-link">
@@ -74,27 +95,34 @@ const ArticleDetail = () => {
               </div>
             </div>
 
-            <div className="info-item">
-              <button className="btn btn-sm action-btn ng-binding btn-outline-secondary follow">
-                <FaPlus className="icon" /> Follow {article.author.username}
-              </button>
-            </div>
-            <div className="info-item ">
-              <button className="btn btn-sm  btn-outline-primary favorite">
-                <FaHeart className="icon" />{" "}
-                <span>Favorite Article: {article.favoritesCount}</span>
-              </button>
-            </div>
-            {/* <div className="info-item">
-              <button className="btn btn-sm edit-art">
-                <FontAwesomeIcon icon={faPencil} /> Edit Article
-              </button>
-            </div>
-            <div className="info-item">
-              <button className="btn btn-sm delete-art">
-                <FontAwesomeIcon icon={faTrashCan} /> Delete Article
-              </button>
-            </div> */}
+            {compareUserName ? (
+              <>
+                <div className="item-edit-del" style={{ display: "flex", gap: "10px" }}>
+                  <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                    <FaEdit className="icon" /> Edit Article
+                  </button>
+
+                  <div className="item-edit-del">
+                    <button className="btn btn-sm action-btn ng-binding btn-outline-secondary" style={{ color: "rgb(184, 92, 92)" }}>
+                      <FaTrashAlt className="icon" style={{ color: "rgb(184, 92, 92)", padding: "5px" }} /> Delete Article
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="info-item">
+                  <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                    <FaPlus className="icon" /> Follow {article.author.username}
+                  </button>
+                </div>
+                <div className="info-item favorite">
+                  <button className="btn btn-sm  btn-outline-primary">
+                    <FaHeart className="icon" /> <span>Favorite Article: {article.favoritesCount}</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -120,7 +148,7 @@ const ArticleDetail = () => {
           <hr />
 
           <div className="article-action">
-            <div className="article-action-container">
+            <div className="article-action-container" style={{ display: "flex", gap: "10px" }}>
               <div className="info-item">
                 <Link to="Account">
                   <img
@@ -142,28 +170,33 @@ const ArticleDetail = () => {
                 </div>
               </div>
 
-              <div className="info-item">
-                <button className="btn btn-sm action-btn ng-binding btn-outline-secondary follow">
-                  <FaPlus className="icon" /> Follow {article.author.username}
-                </button>
-              </div>
-              <div className="info-item">
-                <button className="btn btn-sm  btn-outline-primary favorite">
-                  <FaHeart className="icon" />{" "}
-                  <span>Favorite Article: {article.favoritesCount}</span>
-                </button>
-              </div>
-
-              {/* <div className="info-item">
-                <button className="btn btn-sm edit-art">
-                  <FontAwesomeIcon icon={faPencil} /> Edit Article
-                </button>
-              </div>
-              <div className="info-item">
-                <button className="btn btn-sm delete-art">
-                  <FontAwesomeIcon icon={faTrashCan} /> Delete Article
-                </button>
-              </div> */}
+              {compareUserName ? (
+                <>
+                  <div className="item-edit-del" style={{ display: "flex", gap: "10px" }}>
+                    <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                      <FaEdit className="icon" /> Edit Article
+                    </button>
+                    <div className="item-edit-del">
+                      <button className="btn btn-sm action-btn ng-binding btn-outline-secondary" style={{ color: "rgb(184, 92, 92)" }}>
+                        <FaTrashAlt className="icon" style={{ color: "rgb(184, 92, 92)", padding: "5px" }} /> Delete Article
+                      </button>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="info-item">
+                    <button className="btn btn-sm action-btn ng-binding btn-outline-secondary">
+                      <FaPlus className="icon" /> Follow {article.author.username}
+                    </button>
+                  </div>
+                  <div className="info-item favorite">
+                    <button className="btn btn-sm  btn-outline-primary">
+                      <FaHeart className="icon" /> <span>Favorite Article: {article.favoritesCount}</span>
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
