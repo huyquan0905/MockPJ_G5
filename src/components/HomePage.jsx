@@ -3,13 +3,14 @@ import axios from 'axios';
 import "./style/HomePage.css";
 import GlobalFeed from './GlobalFeed';
 import { useSelector } from "react-redux";
+import YourFeed from './YourFeed';
 
 const HomePage = () => {
     const [tags, setTags] = useState([]);
     const [selectedTag, setSelectedTag] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const isLoggedIn = useSelector(state => state.isAuthenticated);
-
+    const [status, setStatus] = useState('globalfeed')
     useEffect(() => {
         axios.get('https://api.realworld.io/api/tags')
             .then((response) => {
@@ -28,6 +29,7 @@ const HomePage = () => {
                     {tags.map((tag) => (
                         <li key={tag}>
                             <button className='tag-button' onClick={() => {
+                                setStatus('tag')
                                 console.log('Clicked tag:', tag);
                                 setSelectedTag(tag);
                                 setCurrentPage(1);
@@ -49,10 +51,12 @@ const HomePage = () => {
                     <div className='row'>
                         <div className='col-md-8'>
                             <div className='feed'>
-                                <a className='yourfeed' href="#yourfeed">Your Feed</a>
-                                <a className='globalfeed' href="#globalfeed" onClick={() => setSelectedTag(null)}>Global Feed</a>
+                                <button className={`btn ${status === 'yourfeed' ? 'selected' : ''}`} onClick={() => setStatus('yourfeed')}>Your Feed</button>
+                                <button className={`btn ${status === 'globalfeed' ? 'selected' : ''}`} onClick={() => setStatus('globalfeed')}>Global Feed</button>
+                                {status === 'yourfeed' && <YourFeed setStatus={setStatus}/>}
+                                {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
+                                {status === 'tag' && <GlobalFeed setStatus={setStatus} selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage}/>}
                             </div>
-                            <GlobalFeed selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage} />
                         </div>
                         <div className='col-md-3'>
                             {renderTagList()}
