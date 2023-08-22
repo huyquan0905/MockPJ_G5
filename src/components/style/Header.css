@@ -50,5 +50,7 @@
 }
 
 .header-container #navbar-nav-logged .avatar {
-  width: 2rem;
+  width: 2.5rem;
+  border-radius: 50px;
+  height: 2.5rem;
 }

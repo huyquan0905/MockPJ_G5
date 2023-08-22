@@ -6,7 +6,12 @@ import { FaTrash } from "react-icons/fa";
 const ArticleComments = ({ token, slug, user }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
-
+    const [avt, setAvt] = useState({
+        username: '',
+        email: '',
+        bio: '',
+        img: ''
+    });
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -86,6 +91,27 @@ const ArticleComments = ({ token, slug, user }) => {
         }
     };
 
+    useEffect(() => {
+        axios.get('https://api.realworld.io/api/user', {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then(response => {
+        const uData = response.data.user;
+        setAvt({
+          username: uData.username,
+          email: uData.email,
+          bio: uData.bio,
+          img: uData.image
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+
+    }, [])
+
 
     return (
         <div className="artcomment">
@@ -103,7 +129,7 @@ const ArticleComments = ({ token, slug, user }) => {
 
                         <div className="cmt-card-footer">
                             <img
-                                src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"
+                                src={avt.img}
                                 alt="avt"
                                 className="avatar"
                             />

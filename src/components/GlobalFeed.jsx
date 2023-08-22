@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-
-
 const GlobalFeed = ({ selectedTag, currentPage, setCurrentPage }) => {
     const [articles, setArticles] = useState([]);
     const [articlesCount, setArticlesCount] = useState(0);
@@ -91,7 +89,8 @@ const GlobalFeed = ({ selectedTag, currentPage, setCurrentPage }) => {
                         key={article.slug}>
                         <div className='artical-meta'>
                             <div className='author'>
-                                <img className='rounded-circle' src="https://api.realworld.io/images/demo-avatar.png" alt="avatar" />
+                                {/* <img className='rounded-circle' src="https://api.realworld.io/images/demo-avatar.png" alt="avatar" /> */}
+                                <img className='rounded-circle' src={article.author.image} alt="avatar" />
                                 <div className="info">
                                     <p>{article.author.username}</p>
                                     <p>{formatDate(article.createdAt)}</p>

@@ -13,6 +13,13 @@ const Header = () => {
   const [articles, setArticles] = useState([]);
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState([]);
+  const [avt, setAvt] = useState({
+    username: '',
+    email: '',
+    bio: '',
+    img: ''
+  });
+
 
   useEffect(() => {
     axios
@@ -32,6 +39,26 @@ const Header = () => {
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
+
+
+    axios.get('https://api.realworld.io/api/user', {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    })
+      .then(response => {
+        const uData = response.data.user;
+        setAvt({
+          username: uData.username,
+          email: uData.email,
+          bio: uData.bio,
+          img: uData.image
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching user data:', error);
+      });
+
   }, []);
 
   return (
@@ -55,7 +82,7 @@ const Header = () => {
             </Link>
             <Link to="profile">
               <img
-                src="https://img.freepik.com/premium-vector/avatar-icon001_750950-50.jpg?w=1060"
+                src={avt.img}
                 alt="avt"
                 className="avatar"
               />{" "}
