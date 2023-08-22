@@ -52,9 +52,9 @@ const HomePage = () => {
                         <div className='col-md-8'>
                             <div className='feed'>
                                 <button className={`btn ${status === 'yourfeed' ? 'selected' : ''}`} onClick={() => setStatus('yourfeed')}>Your Feed</button>
-                                <button className={`btn ${status === 'globalfeed' ? 'selected' : ''}`} onClick={() => setStatus('globalfeed')}>Global Feed</button>
-                                {status === 'yourfeed' && <YourFeed setStatus={setStatus}/>}
-                                {status === 'globalfeed' && <GlobalFeed setStatus={setStatus}/>}
+                                <button className={`btn ${status === 'globalfeed' ? 'selected' : ''}`} onClick={() => setStatus('globalfeed')} >Global Feed</button>
+                                {status === 'yourfeed' && <YourFeed setStatus={setStatus} selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage}/>}
+                                {status === 'globalfeed' && <GlobalFeed setStatus={setStatus} selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage}/>}
                                 {status === 'tag' && <GlobalFeed setStatus={setStatus} selectedTag={selectedTag} currentPage={currentPage} setCurrentPage={setCurrentPage}/>}
                             </div>
                         </div>

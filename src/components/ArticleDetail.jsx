@@ -237,7 +237,7 @@ const ArticleDetail = () => {
           <hr />
 
           <div className="article-action">
-            <div className="article-action-container" style={{ display: "flex", gap: "10px" }}>
+            <div className="article-action-container" style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
               <div className="info-item">
                 <Link to="Account">
                   <img

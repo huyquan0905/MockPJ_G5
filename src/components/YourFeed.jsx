@@ -34,6 +34,7 @@ const YourFeed = ({ selectedTag, currentPage , setCurrentPage}) => {
   
       fetchFeedArticles();
     }, [currentPage, limit, selectedTag, token]);
+    
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return format(date, "MMMM d, yyyy");

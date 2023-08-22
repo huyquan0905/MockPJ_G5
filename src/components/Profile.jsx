@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import "../components/style/Profile.css"
-
-import { format } from "date-fns";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { format } from 'date-fns';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import '../components/style/Profile.css';
 
 
 const Profile = () => {
@@ -13,50 +12,63 @@ const Profile = () => {
         username: '',
         email: '',
         bio: '',
-        img: ''
+        img: '',
     });
     const [favoriteArticles, setFavoriteArticles] = useState([]);
     const [userArticles, setUserArticles] = useState([]);
     const [selectedArticle, setSelectedArticle] = useState(null);
 
-    useEffect(() => {
+    const fetchUserData = useCallback(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            axios.get('https://api.realworld.io/api/user', {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            })
+            axios
+                .get('https://api.realworld.io/api/user', {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                })
                 .then(response => {
                     const userData = response.data.user;
                     setUser({
                         username: userData.username,
                         email: userData.email,
                         bio: userData.bio,
-                        img: userData.image
+                        img: userData.image,
                     });
                 })
                 .catch(error => {
                     console.error('Error fetching user data:', error);
                 });
+        }
+    }, []);
 
-            axios.get(`https://api.realworld.io/api/articles?favorited=${user.username}`, {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            })
+    const fetchFavoriteArticles = useCallback(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            axios
+                .get(`https://api.realworld.io/api/articles?favorited=${user.username}`, {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                })
                 .then(response => {
-                    setFavoriteArticles(response.data.articles); // Set favorite articles in state
+                    setFavoriteArticles(response.data.articles);
                 })
                 .catch(error => {
                     console.error('Error fetching favorite articles:', error);
                 });
+        }
+    }, [user.username]);
 
-            axios.get(`https://api.realworld.io/api/articles?author=${user.username}`, {
-                headers: {
-                    Authorization: `Token ${token}`,
-                },
-            })
+    const fetchUserArticles = useCallback(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            axios
+                .get(`https://api.realworld.io/api/articles?author=${user.username}`, {
+                    headers: {
+                        Authorization: `Token ${token}`,
+                    },
+                })
                 .then(response => {
                     setUserArticles(response.data.articles);
                 })
@@ -66,90 +78,102 @@ const Profile = () => {
         }
     }, [user.username]);
 
+    const handleFavoriteClick = useCallback(
+        async slug => {
+            try {
+                const response = await axios.post(
+                    `https://api.realworld.io/api/articles/${slug}/favorite`,
+                    null,
+                    {
+                        headers: {
+                            Authorization: `Token ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
 
-    const handleFavoriteClick = async (slug) => {
-        try {
-            const response = await axios.post(`https://api.realworld.io/api/articles/${slug}/favorite`, null, {
-                headers: {
-                    'Authorization': `Token ${localStorage.getItem('token')}`,
-                },
-            });
+                if (response.data.article) {
+                    // Update favorite status and count of the clicked article in userArticles state
+                    setUserArticles(prevUserArticles =>
+                        prevUserArticles.map(article =>
+                            article.slug === slug
+                                ? {
+                                    ...article,
+                                    favorited: response.data.article.favorited,
+                                    favoritesCount: response.data.article.favoritesCount,
+                                }
+                                : article
+                        )
+                    );
 
-            if (response.data.article) {
-                // Update favorite status and count of the clicked article in userArticles state
-                setUserArticles(prevUserArticles => {
-                    return prevUserArticles.map(article => {
-                        if (article.slug === slug) {
-                            return {
-                                ...article,
-                                favorited: response.data.article.favorited,
-                                favoritesCount: response.data.article.favoritesCount,
-                            };
-                        }
-                        return article;
-                    });
-                });
-
-                // Update favorite status and count of the clicked article in favoriteArticles state
-                setFavoriteArticles(prevFavoriteArticles => {
-                    return prevFavoriteArticles.map(article => {
-                        if (article.slug === slug) {
-                            return {
-                                ...article,
-                                favorited: response.data.article.favorited,
-                                favoritesCount: response.data.article.favoritesCount,
-                            };
-                        }
-                        return article;
-                    });
-                });
+                    // Update favorite status and count of the clicked article in favoriteArticles state
+                    setFavoriteArticles(prevFavoriteArticles =>
+                        prevFavoriteArticles.map(article =>
+                            article.slug === slug
+                                ? {
+                                    ...article,
+                                    favorited: response.data.article.favorited,
+                                    favoritesCount: response.data.article.favoritesCount,
+                                }
+                                : article
+                        )
+                    );
+                }
+                setSelectedArticle(response.data.article);
+            } catch (error) {
+                console.error('Error favoriting article:', error);
             }
-            setSelectedArticle(response.data.article);
-        } catch (error) {
-            console.error("Error favoriting article:", error);
-        }
-    };
+        },
+        []
+    );
 
+    const handleUnfavoriteClick = useCallback(
+        async slug => {
+            try {
+                const response = await axios.delete(
+                    `https://api.realworld.io/api/articles/${slug}/favorite`,
+                    {
+                        headers: {
+                            Authorization: `Token ${localStorage.getItem('token')}`,
+                        },
+                    }
+                );
 
-    const formatDate = (dateString) => {
+                if (response.data.article) {
+                    // Update favorite status and count of the clicked article in userArticles state
+                    setUserArticles(prevUserArticles =>
+                        prevUserArticles.map(article =>
+                            article.slug === slug
+                                ? {
+                                    ...article,
+                                    favorited: response.data.article.favorited,
+                                    favoritesCount: response.data.article.favoritesCount,
+                                }
+                                : article
+                        )
+                    );
+
+                    // Update favorite status and count of the clicked article in favoriteArticles state
+                    setFavoriteArticles(prevFavoriteArticles =>
+                        prevFavoriteArticles.filter(article => article.slug !== slug)
+                    );
+                }
+                setSelectedArticle(response.data.article);
+            } catch (error) {
+                console.error('Error unfavoriting article:', error);
+            }
+        },
+        []
+    );
+
+    useEffect(() => {
+        fetchUserData();
+        fetchFavoriteArticles();
+        fetchUserArticles();
+    }, [fetchUserData, fetchFavoriteArticles, fetchUserArticles]);
+    const formatDate = dateString => {
         const date = new Date(dateString);
-        return format(date, "MMMM d, yyyy");
+        return format(date, 'MMMM d, yyyy');
     };
-
-    const handleUnfavoriteClick = async (slug) => {
-        try {
-            const response = await axios.delete(`https://api.realworld.io/api/articles/${slug}/favorite`, {
-                headers: {
-                    'Authorization': `Token ${localStorage.getItem('token')}`,
-                },
-            });
-
-            if (response.data.article) {
-                // Update favorite status and count of the clicked article in userArticles state
-                setUserArticles(prevUserArticles => {
-                    return prevUserArticles.map(article => {
-                        if (article.slug === slug) {
-                            return {
-                                ...article,
-                                favorited: response.data.article.favorited,
-                                favoritesCount: response.data.article.favoritesCount,
-                            };
-                        }
-                        return article;
-                    });
-                });
-
-                // Update favorite status and count of the clicked article in favoriteArticles state
-                setFavoriteArticles(prevFavoriteArticles => {
-                    return prevFavoriteArticles.filter(article => article.slug !== slug);
-                });
-            }
-            setSelectedArticle(response.data.article);
-        } catch (error) {
-            console.error("Error unfavoriting article:", error);
-        }
-    };
-
 
     return (
         <div className='profileCt'>
@@ -157,7 +181,6 @@ const Profile = () => {
                 <div className='bgCt'>
                     <img src={user.img || "https://api.realworld.io/images/smiley-cyrus.jpeg"} alt="" />
                     <h4>{user.username}</h4>
-                    <p className='biouser'>{user.bio}</p>
                     <Link to="/Setting">
                         <i className="fa fa-cog"></i> Edit Profile Settings
                     </Link>
@@ -221,7 +244,7 @@ const Profile = () => {
                                     <div className='article-preview border-top border-bottom' key={article.slug}>
                                         <div className='artical-meta'>
                                             <div className='author'>
-                                                <img className='rounded-circle' src={article.author.username === user.username ? user.img : 'https://api.realworld.io/images/demo-avatar.png'} alt="avatar" />
+                                                <img className='rounded-circle' src={user.img} alt="avatar" />
                                                 <div className="info">
                                                     <a href={`/@${article.author.username}`}>{article.author.username}</a>
                                                     <p>{formatDate(article.createdAt)}</p>
@@ -246,7 +269,6 @@ const Profile = () => {
                             <p>No favorite articles yet.</p>
                         )}
                     </div>
-
                 </div>
             </div>
         </div>

@@ -27,7 +27,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/edit/:slug" element={<EditArticle />} />
+          <Route path="/edit/:slug" element={<EditArticle />} />``
         </Routes>
         <Routes>
           <Route path="/globalfeed" element={<GlobalFeed />} />
