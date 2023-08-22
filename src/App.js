@@ -12,6 +12,8 @@ import { Provider } from "react-redux";
 import store from "./components/redux/store";
 import ArticleDetailPage from './components/ArticleDetailPage'
 import GlobalFeed from './components/GlobalFeed';
+import Profile from "./components/Profile";
+import EditArticle from "./components/EditArticle";
 
 function App() {
   return (
@@ -24,11 +26,12 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/setting" element={<Setting />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/edit/:slug" element={<EditArticle />} />
         </Routes>
         <Routes>
           <Route path="/globalfeed" element={<GlobalFeed />} />
           <Route path="/article/:slug" element={<ArticleDetailPage />} />
-
         </Routes>
       </Provider>
       {/* <Footer /> */}

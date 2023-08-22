@@ -1,32 +1,40 @@
-.contentSt{
+.contentSt {
     width: 37%;
     margin: 0 auto;
     text-align: center;
 }
-.formSt{
+
+.formSt {
     display: flex;
     flex-direction: column;
     padding-bottom: 7rem;
 }
-.formSt input{
+
+.formSt input {
     margin-bottom: 15px;
     padding: 0.75rem 1.5rem;
     border: 1px solid gray;
     font-size: 1.25rem;
 }
-.formSt textarea{
+
+.formSt textarea {
     padding: 0.75rem 1.5rem;
     font-size: 1.25rem;
 }
-.contentSt input:focus,textarea:focus{
-    border-color: #66afe9;;
+
+.contentSt input:focus,
+textarea:focus {
+    border-color: #66afe9;
+    ;
     outline: none;
 }
-.contentSt h1{
+
+.contentSt h1 {
     font-weight: 400;
     font-size: 2.5rem;
 }
-.btnSt{
+
+.btnSt {
     padding: 0.75rem 1.5rem;
     font-size: 1.25rem;
     border-radius: 0.3rem;
@@ -39,12 +47,14 @@
     margin-bottom: 15px;
     border: 1px;
 }
-.btnSt:hover{
+
+.btnSt:hover {
     color: #fff;
     background-color: #449d44;
     border-color: #419641;
 }
-.btnLogout{
+
+.btnLogout {
     color: #B85C5C;
     background-image: none;
     background-color: transparent;
@@ -57,8 +67,7 @@
 
 }
 
-.btnLogout:hover{
+.btnLogout:hover {
     color: white;
     background-color: #B85C5C;
 }
-
